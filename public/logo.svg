@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sword blade -->
+  <path d="M100 20 L100 180" stroke="#333333" stroke-width="8" stroke-linecap="round"/>
+  <!-- Sword guard -->
+  <path d="M80 60 L120 60" stroke="#BE1E2D" stroke-width="12" stroke-linecap="round"/>
+  <!-- Sword handle -->
+  <path d="M100 60 L100 140" stroke="#D4B996" stroke-width="12" stroke-linecap="round"/>
+  <!-- Sword pommel -->
+  <circle cx="100" cy="140" r="10" fill="#333333"/>
+</svg> 
