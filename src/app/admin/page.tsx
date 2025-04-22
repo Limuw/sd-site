@@ -40,6 +40,11 @@ export default function AdminPage() {
       description: "",
       programs: [],
     },
+    events: {
+      title: "",
+      description: "",
+      events: [],
+    },
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -78,6 +83,11 @@ export default function AdminPage() {
               title: data.programs?.title || "",
               description: data.programs?.description || "",
               programs: data.programs?.programs || [],
+            },
+            events: {
+              title: data.events?.title || "",
+              description: data.events?.description || "",
+              events: data.events?.events || [],
             },
           };
           setContent(initializedData);
@@ -122,6 +132,7 @@ export default function AdminPage() {
           <TabsTrigger value="about">О нас</TabsTrigger>
           <TabsTrigger value="home">Главная</TabsTrigger>
           <TabsTrigger value="programs">Программы</TabsTrigger>
+          <TabsTrigger value="events">Мероприятия</TabsTrigger>
         </TabsList>
 
         <TabsContent value="about" className="space-y-4">
@@ -530,6 +541,221 @@ export default function AdminPage() {
                 }}
               >
                 Добавить программу
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="events" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Заголовок страницы мероприятий</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                value={content.events.title}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    events: { ...content.events, title: e.target.value },
+                  })
+                }
+                placeholder="Введите заголовок"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Описание страницы мероприятий</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Textarea
+                value={content.events.description}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    events: { ...content.events, description: e.target.value },
+                  })
+                }
+                placeholder="Введите описание"
+                className="min-h-[100px]"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Мероприятия</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {content.events.events.map((event, index) => (
+                <div
+                  key={index}
+                  className="border border-[#BE1E2D]/20 p-4 rounded-lg space-y-4"
+                >
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-xl font-semibold">
+                      Мероприятие {index + 1}
+                    </h3>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        const newEvents = [...content.events.events];
+                        newEvents.splice(index, 1);
+                        setContent({
+                          ...content,
+                          events: {
+                            ...content.events,
+                            events: newEvents,
+                          },
+                        });
+                      }}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Название мероприятия</label>
+                    <Input
+                      value={event.title}
+                      onChange={(e) => {
+                        const newEvents = [...content.events.events];
+                        newEvents[index].title = e.target.value;
+                        setContent({
+                          ...content,
+                          events: {
+                            ...content.events,
+                            events: newEvents,
+                          },
+                        });
+                      }}
+                      placeholder="Введите название мероприятия"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Дата проведения</label>
+                    <Input
+                      value={event.date}
+                      onChange={(e) => {
+                        const newEvents = [...content.events.events];
+                        newEvents[index].date = e.target.value;
+                        setContent({
+                          ...content,
+                          events: {
+                            ...content.events,
+                            events: newEvents,
+                          },
+                        });
+                      }}
+                      placeholder="Введите дату проведения"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Место проведения</label>
+                    <Input
+                      value={event.location}
+                      onChange={(e) => {
+                        const newEvents = [...content.events.events];
+                        newEvents[index].location = e.target.value;
+                        setContent({
+                          ...content,
+                          events: {
+                            ...content.events,
+                            events: newEvents,
+                          },
+                        });
+                      }}
+                      placeholder="Введите место проведения"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Краткое описание</label>
+                    <Textarea
+                      value={event.description}
+                      onChange={(e) => {
+                        const newEvents = [...content.events.events];
+                        newEvents[index].description = e.target.value;
+                        setContent({
+                          ...content,
+                          events: {
+                            ...content.events,
+                            events: newEvents,
+                          },
+                        });
+                      }}
+                      placeholder="Введите краткое описание"
+                      className="min-h-[80px]"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">URL изображения</label>
+                    <Input
+                      value={event.image}
+                      onChange={(e) => {
+                        const newEvents = [...content.events.events];
+                        newEvents[index].image = e.target.value;
+                        setContent({
+                          ...content,
+                          events: {
+                            ...content.events,
+                            events: newEvents,
+                          },
+                        });
+                      }}
+                      placeholder="Введите URL изображения"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Подробное описание</label>
+                    <Textarea
+                      value={event.details}
+                      onChange={(e) => {
+                        const newEvents = [...content.events.events];
+                        newEvents[index].details = e.target.value;
+                        setContent({
+                          ...content,
+                          events: {
+                            ...content.events,
+                            events: newEvents,
+                          },
+                        });
+                      }}
+                      placeholder="Введите подробное описание (поддерживает Markdown)"
+                      className="min-h-[150px]"
+                    />
+                  </div>
+                </div>
+              ))}
+              <Button
+                onClick={() => {
+                  setContent({
+                    ...content,
+                    events: {
+                      ...content.events,
+                      events: [
+                        ...content.events.events,
+                        {
+                          title: "",
+                          date: "",
+                          location: "",
+                          description: "",
+                          image: "",
+                          details: "",
+                        },
+                      ],
+                    },
+                  });
+                }}
+              >
+                Добавить мероприятие
               </Button>
             </CardContent>
           </Card>

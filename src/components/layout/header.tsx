@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { SignInButton } from "@clerk/nextjs";
-import { SignedIn, SignOutButton, SignedOut } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 
 const navigation = [
   { name: "Главная", href: "/" },
@@ -58,6 +58,7 @@ const navigation = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const { user } = useUser();
 
   return (
     <header
@@ -110,15 +111,9 @@ export function Header() {
               </div>
             ))}
           </div>
-          <div className="ml-10 space-x-4">
-            {/* <button
-              type="button"
-              className="inline-block rounded-md border border-transparent bg-[#BE1E2D] px-4 py-2 text-base font-medium text-white hover:bg-[#BE1E2D]/90"
-            >
-              Join Now
-            </button> */}
+          <div className="ml-10 space-x-4 text-white flex items-center gap-2">
             <SignedIn>
-              <SignOutButton />
+              <UserButton /> {user?.username ?? user?.firstName}
             </SignedIn>
             <SignedOut>
               <SignInButton />

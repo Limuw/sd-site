@@ -39,10 +39,26 @@ export interface ProgramsContent {
   programs: Program[];
 }
 
+export interface Event {
+  title: string;
+  date: string;
+  location: string;
+  image: string;
+  description: string;
+  details: string;
+}
+
+export interface EventsContent {
+  title: string;
+  description: string;
+  events: Event[];
+}
+
 export interface Content {
   about: AboutContent;
   home: HomeContent;
   programs: ProgramsContent;
+  events: EventsContent;
 }
 
 export async function getContent(): Promise<Content | null> {
@@ -87,6 +103,11 @@ export async function getContent(): Promise<Content | null> {
         description: data.programs?.description || "",
         programs: data.programs?.programs || [],
       },
+      events: {
+        title: data.events?.title || "",
+        description: data.events?.description || "",
+        events: data.events?.events || [],
+      },
     };
   } catch (error) {
     console.error("Error fetching content:", error);
@@ -121,6 +142,12 @@ function getDefaultContent(): Content {
       title: "Наши программы",
       description: "Выберите программу обучения, которая подходит именно вам",
       programs: [],
+    },
+    events: {
+      title: "Мероприятия и события",
+      description:
+        "Присоединяйтесь к нашим турнирам, мастер-классам и встречам",
+      events: [],
     },
   };
 }
