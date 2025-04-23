@@ -54,11 +54,36 @@ export interface EventsContent {
   events: Event[];
 }
 
+export interface GalleryItem {
+  image: string;
+  description: string;
+}
+
+export interface GalleryContent {
+  title: string;
+  description: string;
+  items: GalleryItem[];
+}
+
+export interface Price {
+  title: string;
+  description: string;
+  price: string;
+}
+
+export interface PricesContent {
+  title: string;
+  description: string;
+  prices: Price[];
+}
+
 export interface Content {
   about: AboutContent;
   home: HomeContent;
   programs: ProgramsContent;
   events: EventsContent;
+  gallery: GalleryContent;
+  prices: PricesContent;
 }
 
 export async function getContent(): Promise<Content | null> {
@@ -108,6 +133,16 @@ export async function getContent(): Promise<Content | null> {
         description: data.events?.description || "",
         events: data.events?.events || [],
       },
+      gallery: {
+        title: data.gallery?.title || "",
+        description: data.gallery?.description || "",
+        items: data.gallery?.items || [],
+      },
+      prices: {
+        title: data.prices?.title || "",
+        description: data.prices?.description || "",
+        prices: data.prices?.prices || [],
+      },
     };
   } catch (error) {
     console.error("Error fetching content:", error);
@@ -148,6 +183,16 @@ function getDefaultContent(): Content {
       description:
         "Присоединяйтесь к нашим турнирам, мастер-классам и встречам",
       events: [],
+    },
+    gallery: {
+      title: "Галерея",
+      description: "Фотографии с наших мероприятий, тренировок и выступлений",
+      items: [],
+    },
+    prices: {
+      title: "Цены",
+      description: "Стоимость занятий и абонементов",
+      prices: [],
     },
   };
 }

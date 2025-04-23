@@ -45,6 +45,16 @@ export default function AdminPage() {
       description: "",
       events: [],
     },
+    gallery: {
+      title: "",
+      description: "",
+      items: [],
+    },
+    prices: {
+      title: "",
+      description: "",
+      prices: [],
+    },
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -88,6 +98,16 @@ export default function AdminPage() {
               title: data.events?.title || "",
               description: data.events?.description || "",
               events: data.events?.events || [],
+            },
+            gallery: {
+              title: data.gallery?.title || "",
+              description: data.gallery?.description || "",
+              items: data.gallery?.items || [],
+            },
+            prices: {
+              title: data.prices?.title || "",
+              description: data.prices?.description || "",
+              prices: data.prices?.prices || [],
             },
           };
           setContent(initializedData);
@@ -133,6 +153,8 @@ export default function AdminPage() {
           <TabsTrigger value="home">Главная</TabsTrigger>
           <TabsTrigger value="programs">Программы</TabsTrigger>
           <TabsTrigger value="events">Мероприятия</TabsTrigger>
+          <TabsTrigger value="gallery">Галерея</TabsTrigger>
+          <TabsTrigger value="prices">Цены</TabsTrigger>
         </TabsList>
 
         <TabsContent value="about" className="space-y-4">
@@ -417,7 +439,7 @@ export default function AdminPage() {
               {content.programs.programs.map((program, index) => (
                 <div
                   key={index}
-                  className="border border-[#BE1E2D]/20 p-4 rounded-lg space-y-4"
+                  className="border border-white p-4 rounded-lg space-y-4"
                 >
                   <div className="flex justify-between items-center">
                     <h3 className="text-xl font-semibold">
@@ -592,7 +614,7 @@ export default function AdminPage() {
               {content.events.events.map((event, index) => (
                 <div
                   key={index}
-                  className="border border-[#BE1E2D]/20 p-4 rounded-lg space-y-4"
+                  className="border border-white p-4 rounded-lg space-y-4"
                 >
                   <div className="flex justify-between items-center">
                     <h3 className="text-xl font-semibold">
@@ -756,6 +778,298 @@ export default function AdminPage() {
                 }}
               >
                 Добавить мероприятие
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="gallery" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Заголовок галереи</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                value={content.gallery.title}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    gallery: { ...content.gallery, title: e.target.value },
+                  })
+                }
+                placeholder="Введите заголовок"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Описание галереи</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Textarea
+                value={content.gallery.description}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    gallery: {
+                      ...content.gallery,
+                      description: e.target.value,
+                    },
+                  })
+                }
+                placeholder="Введите описание"
+                className="min-h-[100px]"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Фотографии</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {content.gallery.items.map((item, index) => (
+                <div
+                  key={index}
+                  className="border border-white p-4 rounded-lg space-y-4"
+                >
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-xl font-semibold">
+                      Фотография {index + 1}
+                    </h3>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        const newItems = [...content.gallery.items];
+                        newItems.splice(index, 1);
+                        setContent({
+                          ...content,
+                          gallery: {
+                            ...content.gallery,
+                            items: newItems,
+                          },
+                        });
+                      }}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">URL изображения</label>
+                    <Input
+                      value={item.image}
+                      onChange={(e) => {
+                        const newItems = [...content.gallery.items];
+                        newItems[index].image = e.target.value;
+                        setContent({
+                          ...content,
+                          gallery: {
+                            ...content.gallery,
+                            items: newItems,
+                          },
+                        });
+                      }}
+                      placeholder="Введите URL изображения"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Описание</label>
+                    <Textarea
+                      value={item.description}
+                      onChange={(e) => {
+                        const newItems = [...content.gallery.items];
+                        newItems[index].description = e.target.value;
+                        setContent({
+                          ...content,
+                          gallery: {
+                            ...content.gallery,
+                            items: newItems,
+                          },
+                        });
+                      }}
+                      placeholder="Введите описание"
+                      className="min-h-[80px]"
+                    />
+                  </div>
+                </div>
+              ))}
+              <Button
+                onClick={() => {
+                  setContent({
+                    ...content,
+                    gallery: {
+                      ...content.gallery,
+                      items: [
+                        ...content.gallery.items,
+                        {
+                          image: "",
+                          description: "",
+                        },
+                      ],
+                    },
+                  });
+                }}
+              >
+                Добавить фотографию
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="prices" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Заголовок страницы цен</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                value={content.prices.title}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    prices: { ...content.prices, title: e.target.value },
+                  })
+                }
+                placeholder="Введите заголовок"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Описание страницы цен</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Textarea
+                value={content.prices.description}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    prices: {
+                      ...content.prices,
+                      description: e.target.value,
+                    },
+                  })
+                }
+                placeholder="Введите описание"
+                className="min-h-[100px]"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Цены</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {content.prices.prices.map((price, index) => (
+                <div
+                  key={index}
+                  className="border border-white p-4 rounded-lg space-y-4"
+                >
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-xl font-semibold">Цена {index + 1}</h3>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        const newPrices = [...content.prices.prices];
+                        newPrices.splice(index, 1);
+                        setContent({
+                          ...content,
+                          prices: {
+                            ...content.prices,
+                            prices: newPrices,
+                          },
+                        });
+                      }}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Название цены</label>
+                    <Input
+                      value={price.title}
+                      onChange={(e) => {
+                        const newPrices = [...content.prices.prices];
+                        newPrices[index].title = e.target.value;
+                        setContent({
+                          ...content,
+                          prices: {
+                            ...content.prices,
+                            prices: newPrices,
+                          },
+                        });
+                      }}
+                      placeholder="Введите название цены"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Стоимость</label>
+                    <Input
+                      value={price.price}
+                      onChange={(e) => {
+                        const newPrices = [...content.prices.prices];
+                        newPrices[index].price = e.target.value;
+                        setContent({
+                          ...content,
+                          prices: {
+                            ...content.prices,
+                            prices: newPrices,
+                          },
+                        });
+                      }}
+                      placeholder="Введите стоимость"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm">Описание</label>
+                    <Textarea
+                      value={price.description}
+                      onChange={(e) => {
+                        const newPrices = [...content.prices.prices];
+                        newPrices[index].description = e.target.value;
+                        setContent({
+                          ...content,
+                          prices: {
+                            ...content.prices,
+                            prices: newPrices,
+                          },
+                        });
+                      }}
+                      placeholder="Введите описание"
+                      className="min-h-[80px]"
+                    />
+                  </div>
+                </div>
+              ))}
+              <Button
+                onClick={() => {
+                  setContent({
+                    ...content,
+                    prices: {
+                      ...content.prices,
+                      prices: [
+                        ...content.prices.prices,
+                        {
+                          title: "",
+                          price: "",
+                          description: "",
+                        },
+                      ],
+                    },
+                  });
+                }}
+              >
+                Добавить цену
               </Button>
             </CardContent>
           </Card>

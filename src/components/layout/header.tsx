@@ -41,18 +41,11 @@ const navigation = [
   },
   { name: "Галерея", href: "/gallery" },
   {
-    name: "Членство",
-    href: "/membership",
-    submenu: [
-      { name: "Присоединиться", href: "/membership/join" },
-      { name: "Преимущества", href: "/membership/benefits" },
-      { name: "Цены", href: "/membership/pricing" },
-      { name: "ЧаВо", href: "/membership/faq" },
-    ],
+    name: "Цены",
+    href: "/prices",
   },
   { name: "Контакты", href: "/contact" },
   { name: "Блог", href: "/blog" },
-  { name: "Ресурсы", href: "/resources" },
 ];
 
 export function Header() {

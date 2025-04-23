@@ -156,6 +156,73 @@ const defaultContent = {
       },
     ],
   },
+  gallery: {
+    title: "Галерея",
+    description: "Фотографии с наших мероприятий, тренировок и выступлений",
+    items: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1529144415895-6aae60109edc?q=80&w=2071&auto=format&fit=crop",
+        description: "Турнир по спортивному фехтованию",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
+        description: "Тренировка юных фехтовальщиков",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1565873741571-2c7bd261ea27?q=80&w=2071&auto=format&fit=crop",
+        description: "Мастер-класс по историческому фехтованию",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1622384389282-3c43adf781e4?q=80&w=1974&auto=format&fit=crop",
+        description: "Показательные выступления",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?q=80&w=2070&auto=format&fit=crop",
+        description: "Соревнования по артистическому фехтованию",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1561348799-889f5a909f59?q=80&w=1990&auto=format&fit=crop",
+        description: "Историческая реконструкция рыцарского турнира",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=2069&auto=format&fit=crop",
+        description: "Групповая тренировка фехтовальщиков",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1592125590566-0dc8675d4105?q=80&w=1974&auto=format&fit=crop",
+        description: "Детский клуб фехтования",
+      },
+    ],
+  },
+  prices: {
+    title: "Цены",
+    description: "Стоимость занятий и абонементов в нашем клубе",
+    prices: [
+      {
+        title: "Разовое занятие",
+        description: "Одно занятие с тренером (1.5 часа)",
+        price: "1500 ₽",
+      },
+      {
+        title: "Абонемент на 8 занятий",
+        description: "Срок действия 1 месяц",
+        price: "9000 ₽",
+      },
+      {
+        title: "Абонемент на 12 занятий",
+        description: "Срок действия 2 месяца",
+        price: "12000 ₽",
+      },
+    ],
+  },
 };
 
 export async function GET() {

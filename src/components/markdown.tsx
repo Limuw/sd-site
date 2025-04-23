@@ -31,8 +31,8 @@ export const Markdown = ({ children }: MarkdownProps) => {
             className={cn("rounded-lg border", className)}
             src={src || ""}
             alt={alt || ""}
-            width={+(props.width || 0)}
-            height={+(props.height || 0)}
+            width={props.width ? Number(props.width) : 800}
+            height={props.height ? Number(props.height) : 600}
           />
         ),
         strong: ({ children }) => (

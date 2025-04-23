@@ -4,7 +4,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen dark">
       <Header />
-      <main>{children}</main>
+      <main className="bg-black">{children}</main>
     </div>
   );
 }
