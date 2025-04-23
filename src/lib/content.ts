@@ -77,6 +77,20 @@ export interface PricesContent {
   prices: Price[];
 }
 
+export interface ContactContent {
+  title: string;
+  description: string;
+  email: string;
+  phone: string;
+  address: string;
+  socialLinks: {
+    vk?: string;
+    instagram?: string;
+    telegram?: string;
+  };
+  mapLocation: string;
+}
+
 export interface Content {
   about: AboutContent;
   home: HomeContent;
@@ -84,6 +98,7 @@ export interface Content {
   events: EventsContent;
   gallery: GalleryContent;
   prices: PricesContent;
+  contact: ContactContent;
 }
 
 export async function getContent(): Promise<Content | null> {
@@ -143,6 +158,15 @@ export async function getContent(): Promise<Content | null> {
         description: data.prices?.description || "",
         prices: data.prices?.prices || [],
       },
+      contact: {
+        title: data.contact?.title || "",
+        description: data.contact?.description || "",
+        email: data.contact?.email || "",
+        phone: data.contact?.phone || "",
+        address: data.contact?.address || "",
+        socialLinks: data.contact?.socialLinks || {},
+        mapLocation: data.contact?.mapLocation || "",
+      },
     };
   } catch (error) {
     console.error("Error fetching content:", error);
@@ -193,6 +217,20 @@ function getDefaultContent(): Content {
       title: "Цены",
       description: "Стоимость занятий и абонементов",
       prices: [],
+    },
+    contact: {
+      title: "Контакты",
+      description: "Свяжитесь с нами, чтобы узнать больше о наших программах",
+      email: "info@fencing-club.ru",
+      phone: "+7 (999) 123-45-67",
+      address: "г. Москва, ул. Спортивная, д. 10",
+      socialLinks: {
+        vk: "https://vk.com/fencingclub",
+        instagram: "https://instagram.com/fencingclub",
+        telegram: "https://t.me/fencingclub",
+      },
+      mapLocation:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2244.397087990812!2d37.62601841575488!3d55.74881998045931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54af918bab1c1%3A0x5e3c5e0458ea4ad!2z0JrRgNC10LzQu9GN0LLRgdC60LDRjyDQvdCw0LEuLCAxLCDQnNC-0YHQutCy0LAsIDEwOTAxMg!5e0!3m2!1sru!2sru!4v1627376675639!5m2!1sru!2sru",
     },
   };
 }

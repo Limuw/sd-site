@@ -55,6 +55,19 @@ export default function AdminPage() {
       description: "",
       prices: [],
     },
+    contact: {
+      title: "",
+      description: "",
+      email: "",
+      phone: "",
+      address: "",
+      socialLinks: {
+        vk: "",
+        instagram: "",
+        telegram: "",
+      },
+      mapLocation: "",
+    },
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -109,6 +122,19 @@ export default function AdminPage() {
               description: data.prices?.description || "",
               prices: data.prices?.prices || [],
             },
+            contact: {
+              title: data.contact?.title || "",
+              description: data.contact?.description || "",
+              email: data.contact?.email || "",
+              phone: data.contact?.phone || "",
+              address: data.contact?.address || "",
+              socialLinks: {
+                vk: data.contact?.socialLinks?.vk || "",
+                instagram: data.contact?.socialLinks?.instagram || "",
+                telegram: data.contact?.socialLinks?.telegram || "",
+              },
+              mapLocation: data.contact?.mapLocation || "",
+            },
           };
           setContent(initializedData);
         }
@@ -155,6 +181,7 @@ export default function AdminPage() {
           <TabsTrigger value="events">Мероприятия</TabsTrigger>
           <TabsTrigger value="gallery">Галерея</TabsTrigger>
           <TabsTrigger value="prices">Цены</TabsTrigger>
+          <TabsTrigger value="contact">Контакты</TabsTrigger>
         </TabsList>
 
         <TabsContent value="about" className="space-y-4">
@@ -1071,6 +1098,198 @@ export default function AdminPage() {
               >
                 Добавить цену
               </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="contact" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Заголовок страницы контактов</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                value={content.contact.title}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    contact: { ...content.contact, title: e.target.value },
+                  })
+                }
+                placeholder="Введите заголовок"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Описание страницы контактов</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Textarea
+                value={content.contact.description}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    contact: {
+                      ...content.contact,
+                      description: e.target.value,
+                    },
+                  })
+                }
+                placeholder="Введите описание"
+                className="min-h-[100px]"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Контактная информация</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm">Электронная почта</label>
+                <Input
+                  value={content.contact.email}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      contact: {
+                        ...content.contact,
+                        email: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="Введите электронную почту"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm">Телефон</label>
+                <Input
+                  value={content.contact.phone}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      contact: {
+                        ...content.contact,
+                        phone: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="Введите телефон"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm">Адрес</label>
+                <Input
+                  value={content.contact.address}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      contact: {
+                        ...content.contact,
+                        address: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="Введите адрес"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Социальные сети</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm">ВКонтакте</label>
+                <Input
+                  value={content.contact.socialLinks.vk}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      contact: {
+                        ...content.contact,
+                        socialLinks: {
+                          ...content.contact.socialLinks,
+                          vk: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                  placeholder="Введите ссылку на ВКонтакте"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm">Instagram</label>
+                <Input
+                  value={content.contact.socialLinks.instagram}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      contact: {
+                        ...content.contact,
+                        socialLinks: {
+                          ...content.contact.socialLinks,
+                          instagram: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                  placeholder="Введите ссылку на Instagram"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm">Telegram</label>
+                <Input
+                  value={content.contact.socialLinks.telegram}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      contact: {
+                        ...content.contact,
+                        socialLinks: {
+                          ...content.contact.socialLinks,
+                          telegram: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                  placeholder="Введите ссылку на Telegram"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Карта</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <label className="text-sm">URL встраиваемой карты</label>
+                <Textarea
+                  value={content.contact.mapLocation}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      contact: {
+                        ...content.contact,
+                        mapLocation: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="Введите URL встраиваемой карты"
+                  className="min-h-[100px]"
+                />
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

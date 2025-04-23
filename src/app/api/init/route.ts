@@ -223,6 +223,20 @@ const defaultContent = {
       },
     ],
   },
+  contact: {
+    title: "Контакты",
+    description: "Свяжитесь с нами, чтобы узнать больше о наших программах",
+    email: "info@fencing-club.ru",
+    phone: "+7 (999) 123-45-67",
+    address: "г. Москва, ул. Спортивная, д. 10",
+    socialLinks: {
+      vk: "https://vk.com/fencingclub",
+      instagram: "https://instagram.com/fencingclub",
+      telegram: "https://t.me/fencingclub",
+    },
+    mapLocation:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.349390522522!2d27.597260976880317!3d53.90916733246289!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfb2ada3f9f1%3A0x47b517482e40cddf!2zMS3QuSDQotCy0ZHRgNC00YvQuSDQv9C10YDQtdGD0LvQvtC6IDExLCDQnNC40L3RgdC6LCDQnNC40L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjCwg0JHQtdC70LDRgNGD0YHRjA!5e0!3m2!1sru!2slt!4v1745450970468!5m2!1sru!2slt",
+  },
 };
 
 export async function GET() {
