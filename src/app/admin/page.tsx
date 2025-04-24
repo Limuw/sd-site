@@ -9,6 +9,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import { Markdown } from "@/components/markdown";
 
 export default function AdminPage() {
   const { isSignedIn, isLoaded } = useAuth();
@@ -67,6 +74,11 @@ export default function AdminPage() {
         telegram: "",
       },
       mapLocation: "",
+    },
+    blog: {
+      title: "",
+      description: "",
+      entries: [],
     },
   });
 
@@ -135,6 +147,11 @@ export default function AdminPage() {
               },
               mapLocation: data.contact?.mapLocation || "",
             },
+            blog: {
+              title: data.blog?.title || "",
+              description: data.blog?.description || "",
+              entries: data.blog?.entries || [],
+            },
           };
           setContent(initializedData);
         }
@@ -174,14 +191,15 @@ export default function AdminPage() {
       </div>
 
       <Tabs defaultValue="about">
-        <TabsList className="mb-8">
-          <TabsTrigger value="about">О нас</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-8">
           <TabsTrigger value="home">Главная</TabsTrigger>
+          <TabsTrigger value="about">О нас</TabsTrigger>
           <TabsTrigger value="programs">Программы</TabsTrigger>
           <TabsTrigger value="events">Мероприятия</TabsTrigger>
           <TabsTrigger value="gallery">Галерея</TabsTrigger>
           <TabsTrigger value="prices">Цены</TabsTrigger>
           <TabsTrigger value="contact">Контакты</TabsTrigger>
+          <TabsTrigger value="blog">Блог</TabsTrigger>
         </TabsList>
 
         <TabsContent value="about" className="space-y-4">
@@ -1290,6 +1308,295 @@ export default function AdminPage() {
                   className="min-h-[100px]"
                 />
               </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="blog" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Настройки блога</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm">Заголовок</label>
+                <Input
+                  value={content.blog.title}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      blog: { ...content.blog, title: e.target.value },
+                    })
+                  }
+                  placeholder="Введите заголовок блога"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm">Описание</label>
+                <Textarea
+                  value={content.blog.description}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      blog: { ...content.blog, description: e.target.value },
+                    })
+                  }
+                  placeholder="Введите описание блога"
+                  className="min-h-[100px]"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Записи блога</CardTitle>
+              <Button
+                onClick={() => {
+                  const newEntry = {
+                    id: Date.now().toString(),
+                    title: "Новая запись",
+                    excerpt: "Краткое описание новой записи",
+                    content: "# Новая запись\n\nТекст новой записи",
+                    date: new Date().toISOString().split("T")[0],
+                    author: "",
+                    image: "",
+                  };
+                  setContent({
+                    ...content,
+                    blog: {
+                      ...content.blog,
+                      entries: [...content.blog.entries, newEntry],
+                    },
+                  });
+                }}
+                variant="outline"
+              >
+                Добавить запись
+              </Button>
+            </CardHeader>
+            <CardContent>
+              {content.blog.entries.length > 0 ? (
+                <div className="space-y-6">
+                  {content.blog.entries.map((entry, index) => (
+                    <Card key={entry.id} className="overflow-hidden">
+                      <CardHeader className="pb-0">
+                        <div className="flex justify-between items-center">
+                          <CardTitle className="text-lg">
+                            {entry.title}
+                          </CardTitle>
+                          <Button
+                            variant="ghost"
+                            onClick={() => {
+                              const updatedEntries = [...content.blog.entries];
+                              updatedEntries.splice(index, 1);
+                              setContent({
+                                ...content,
+                                blog: {
+                                  ...content.blog,
+                                  entries: updatedEntries,
+                                },
+                              });
+                            }}
+                            className="h-8 w-8 p-0"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-4 h-4"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                              />
+                            </svg>
+                          </Button>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="py-4">
+                        <Accordion type="single" collapsible>
+                          <AccordionItem value="details">
+                            <AccordionTrigger>Детали записи</AccordionTrigger>
+                            <AccordionContent>
+                              <div className="space-y-3 pt-2">
+                                <div className="space-y-1">
+                                  <label className="text-sm">Заголовок</label>
+                                  <Input
+                                    value={entry.title}
+                                    onChange={(e) => {
+                                      const updatedEntries = [
+                                        ...content.blog.entries,
+                                      ];
+                                      updatedEntries[index] = {
+                                        ...entry,
+                                        title: e.target.value,
+                                      };
+                                      setContent({
+                                        ...content,
+                                        blog: {
+                                          ...content.blog,
+                                          entries: updatedEntries,
+                                        },
+                                      });
+                                    }}
+                                    placeholder="Введите заголовок"
+                                  />
+                                </div>
+                                <div className="space-y-1">
+                                  <label className="text-sm">
+                                    Краткое описание
+                                  </label>
+                                  <Textarea
+                                    value={entry.excerpt}
+                                    onChange={(e) => {
+                                      const updatedEntries = [
+                                        ...content.blog.entries,
+                                      ];
+                                      updatedEntries[index] = {
+                                        ...entry,
+                                        excerpt: e.target.value,
+                                      };
+                                      setContent({
+                                        ...content,
+                                        blog: {
+                                          ...content.blog,
+                                          entries: updatedEntries,
+                                        },
+                                      });
+                                    }}
+                                    placeholder="Введите краткое описание"
+                                    className="min-h-[80px]"
+                                  />
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                  <div className="space-y-1">
+                                    <label className="text-sm">Дата</label>
+                                    <Input
+                                      type="date"
+                                      value={entry.date}
+                                      onChange={(e) => {
+                                        const updatedEntries = [
+                                          ...content.blog.entries,
+                                        ];
+                                        updatedEntries[index] = {
+                                          ...entry,
+                                          date: e.target.value,
+                                        };
+                                        setContent({
+                                          ...content,
+                                          blog: {
+                                            ...content.blog,
+                                            entries: updatedEntries,
+                                          },
+                                        });
+                                      }}
+                                    />
+                                  </div>
+                                  <div className="space-y-1">
+                                    <label className="text-sm">Автор</label>
+                                    <Input
+                                      value={entry.author}
+                                      onChange={(e) => {
+                                        const updatedEntries = [
+                                          ...content.blog.entries,
+                                        ];
+                                        updatedEntries[index] = {
+                                          ...entry,
+                                          author: e.target.value,
+                                        };
+                                        setContent({
+                                          ...content,
+                                          blog: {
+                                            ...content.blog,
+                                            entries: updatedEntries,
+                                          },
+                                        });
+                                      }}
+                                      placeholder="Введите имя автора"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="space-y-1">
+                                  <label className="text-sm">
+                                    URL изображения
+                                  </label>
+                                  <Input
+                                    value={entry.image || ""}
+                                    onChange={(e) => {
+                                      const updatedEntries = [
+                                        ...content.blog.entries,
+                                      ];
+                                      updatedEntries[index] = {
+                                        ...entry,
+                                        image: e.target.value,
+                                      };
+                                      setContent({
+                                        ...content,
+                                        blog: {
+                                          ...content.blog,
+                                          entries: updatedEntries,
+                                        },
+                                      });
+                                    }}
+                                    placeholder="Введите URL изображения"
+                                  />
+                                </div>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                          <AccordionItem value="content">
+                            <AccordionTrigger>
+                              Содержание (Markdown)
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pt-2">
+                                <Textarea
+                                  value={entry.content}
+                                  onChange={(e) => {
+                                    const updatedEntries = [
+                                      ...content.blog.entries,
+                                    ];
+                                    updatedEntries[index] = {
+                                      ...entry,
+                                      content: e.target.value,
+                                    };
+                                    setContent({
+                                      ...content,
+                                      blog: {
+                                        ...content.blog,
+                                        entries: updatedEntries,
+                                      },
+                                    });
+                                  }}
+                                  placeholder="Введите содержание в формате Markdown"
+                                  className="min-h-[300px] font-mono"
+                                />
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                          <AccordionItem value="preview">
+                            <AccordionTrigger>Предпросмотр</AccordionTrigger>
+                            <AccordionContent>
+                              <div className="max-w-none flex flex-col gap-4 pt-4">
+                                <Markdown>{entry.content}</Markdown>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  Нет записей в блоге. Нажмите &quot;Добавить запись&quot;,
+                  чтобы создать новую.
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

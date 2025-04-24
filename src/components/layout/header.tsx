@@ -6,7 +6,8 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { SignInButton } from "@clerk/nextjs";
-import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Button } from "../ui/button";
 
 const navigation = [
   { name: "Главная", href: "/" },
@@ -51,7 +52,6 @@ const navigation = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
-  const { user } = useUser();
 
   return (
     <header
@@ -106,10 +106,21 @@ export function Header() {
           </div>
           <div className="ml-10 space-x-4 text-white flex items-center gap-2">
             <SignedIn>
-              <UserButton /> {user?.username ?? user?.firstName}
+              <UserButton
+                showName
+                appearance={{
+                  elements: {
+                    userButtonTrigger: {
+                      color: "#fff",
+                    },
+                  },
+                }}
+              />
             </SignedIn>
             <SignedOut>
-              <SignInButton />
+              <SignInButton>
+                <Button className="cursor-pointer">Войти</Button>
+              </SignInButton>
             </SignedOut>
           </div>
           <div className="flex lg:hidden">

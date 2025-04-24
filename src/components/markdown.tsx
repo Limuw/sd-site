@@ -11,12 +11,11 @@ export const Markdown = ({ children }: MarkdownProps) => {
   return (
     <ReactMarkdown
       components={{
-        h1: ({ children }) => <h1 className="text-6xl">{children}</h1>,
-        h2: ({ children }) => <h2 className="text-5xl">{children}</h2>,
-        h3: ({ children }) => <h3 className="text-4xl">{children}</h3>,
-        h4: ({ children }) => <h4 className="text-3xl">{children}</h4>,
-        h5: ({ children }) => <h5 className="text-xl">{children}</h5>,
-        h6: ({ children }) => <h6 className="text-lg">{children}</h6>,
+        h1: ({ children }) => <h1 className="text-4xl">{children}</h1>,
+        h2: ({ children }) => <h2 className="text-3xl">{children}</h2>,
+        h3: ({ children }) => <h3 className="text-2xl">{children}</h3>,
+        h4: ({ children }) => <h4 className="text-xl">{children}</h4>,
+        h5: ({ children }) => <h5 className="text-lg">{children}</h5>,
         hr: () => (
           <hr className="border-t-2 border-typography-secondary my-4" />
         ),
