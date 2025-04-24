@@ -9,47 +9,54 @@ import { SignInButton } from "@clerk/nextjs";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Button } from "../ui/button";
 
-const navigation = [
-  { name: "Главная", href: "/" },
-  {
-    name: "О нас",
-    href: "/about",
-    submenu: [
-      { name: "История клуба", href: "/about/history" },
-      { name: "Наша миссия", href: "/about/mission" },
-      { name: "Инструкторы", href: "/about/instructors" },
-    ],
-  },
-  {
-    name: "Программы",
-    href: "/programs",
-    submenu: [
-      { name: "Начальные классы", href: "/programs/beginner" },
-      { name: "Продвинутое обучение", href: "/programs/advanced" },
-      { name: "Ролевые сессии", href: "/programs/roleplay" },
-      { name: "Специальные мероприятия", href: "/programs/events" },
-    ],
-  },
-  {
-    name: "Мероприятия",
-    href: "/events",
-    submenu: [
-      { name: "Турниры", href: "/events/tournaments" },
-      { name: "Мастер-классы", href: "/events/workshops" },
-      { name: "Встречи", href: "/events/social" },
-      { name: "Календарь", href: "/events/calendar" },
-    ],
-  },
-  { name: "Галерея", href: "/gallery" },
-  {
-    name: "Цены",
-    href: "/prices",
-  },
-  { name: "Контакты", href: "/contact" },
-  { name: "Блог", href: "/blog" },
-];
+interface SubMenuItem {
+  name: string;
+  href: string;
+}
 
-export function Header() {
+interface MenuItem {
+  name: string;
+  href: string;
+  submenu?: SubMenuItem[];
+}
+
+interface HeaderProps {
+  programs: string[];
+  events: string[];
+}
+
+export function Header({ programs, events }: HeaderProps) {
+  const navigation: MenuItem[] = [
+    { name: "Главная", href: "/" },
+    {
+      name: "О нас",
+      href: "/about",
+    },
+    {
+      name: "Программы",
+      href: "/programs",
+      submenu: programs.map((el, idx) => ({
+        name: el,
+        href: `/programs/#${idx}`,
+      })),
+    },
+    {
+      name: "Мероприятия",
+      href: "/events",
+      submenu: events.map((el, idx) => ({
+        name: el,
+        href: `/events/#${idx}`,
+      })),
+    },
+    { name: "Галерея", href: "/gallery" },
+    {
+      name: "Цены",
+      href: "/prices",
+    },
+    { name: "Контакты", href: "/contact" },
+    { name: "Блог", href: "/blog" },
+  ];
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 

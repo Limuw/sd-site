@@ -266,7 +266,7 @@ const defaultContent = {
 2. Шпага
 3. Сабля
 
-![Фехтовальщик в действии](/images/blog/fencer.jpg)
+![Фехтовальщик в действии](https://cs8.pikabu.ru/post_img/big/2017/09/06/8/1504705254129595808.jpg)
 
 ### Олимпийская история
 
@@ -331,7 +331,7 @@ const defaultContent = {
 * Протирайте **сухой** тканью после тренировок
 * Храните в чехле в сухом месте
 
-![Части рапиры](/images/blog/rapier-parts.jpg)
+![Части рапиры](https://oruzhejnaya.ru/images/rapier/pic_arms_rapier06.jpg)
 
 ### Где купить?
 

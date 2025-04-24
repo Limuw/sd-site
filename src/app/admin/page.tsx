@@ -21,23 +21,23 @@ export default function AdminPage() {
   const { isSignedIn, isLoaded } = useAuth();
 
   const [content, setContent] = useState<Content>({
-    about: {
+  about: {
       description: "",
       history: "",
       mission: "",
       instructors: "",
       values: [],
     },
-    home: {
-      hero: {
+  home: {
+    hero: {
         title: "",
         description: "",
       },
-      about: {
+    about: {
         title: "",
         description: "",
       },
-      cta: {
+    cta: {
         title: "",
         description: "",
       },
@@ -87,8 +87,8 @@ export default function AdminPage() {
   const [saveStatus, setSaveStatus] = useState("");
 
   useEffect(() => {
-    const fetchContent = async () => {
-      try {
+  const fetchContent = async () => {
+    try {
         const data = await getContent();
         if (data) {
           // Ensure all required structures exist
@@ -157,17 +157,17 @@ export default function AdminPage() {
           };
           setContent(initializedData);
         }
-      } catch (error) {
-        console.error("Error fetching content:", error);
-      }
-    };
+    } catch (error) {
+      console.error("Error fetching content:", error);
+    }
+  };
     fetchContent();
   }, []);
 
   const handleSave = async () => {
     setIsSaving(true);
     const success = await updateContent(content);
-    setIsSaving(false);
+      setIsSaving(false);
     setSaveStatus(success ? "Сохранено успешно!" : "Ошибка при сохранении!");
     setTimeout(() => setSaveStatus(""), 3000);
   };
@@ -191,8 +191,8 @@ export default function AdminPage() {
             disabled={isSaving}
             className="fixed bottom-5 right-5"
           >
-            {isSaving ? "Сохранение..." : "Сохранить изменения"}
-          </Button>
+          {isSaving ? "Сохранение..." : "Сохранить изменения"}
+        </Button>
         </div>
       </div>
 
@@ -293,31 +293,31 @@ export default function AdminPage() {
               {content.about.values.map((value, index) => (
                 <div key={index} className="flex gap-4 items-start">
                   <div className="flex-1 space-y-2">
-                    <Input
-                      value={value.title}
-                      onChange={(e) => {
+                  <Input
+                    value={value.title}
+                    onChange={(e) => {
                         const newValues = [...content.about.values];
                         newValues[index].title = e.target.value;
-                        setContent({
+                      setContent({
                           ...content,
                           about: { ...content.about, values: newValues },
-                        });
-                      }}
+                      });
+                    }}
                       placeholder="Введите заголовок"
-                    />
-                    <Textarea
-                      value={value.description}
-                      onChange={(e) => {
+                  />
+                  <Textarea
+                    value={value.description}
+                    onChange={(e) => {
                         const newValues = [...content.about.values];
                         newValues[index].description = e.target.value;
-                        setContent({
+                      setContent({
                           ...content,
                           about: { ...content.about, values: newValues },
-                        });
-                      }}
+                      });
+                    }}
                       placeholder="Введите описание"
-                      className="min-h-[100px]"
-                    />
+                    className="min-h-[100px]"
+                  />
                   </div>
                   <Button
                     variant="ghost"
@@ -363,22 +363,22 @@ export default function AdminPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm">Заголовок</label>
-                <Input
+              <Input
                   value={content.home.hero.title}
-                  onChange={(e) =>
-                    setContent({
+                onChange={(e) =>
+                  setContent({
                       ...content,
-                      home: {
+                    home: {
                         ...content.home,
                         hero: {
                           ...content.home.hero,
                           title: e.target.value,
                         },
-                      },
-                    })
-                  }
-                  placeholder="Введите заголовок"
-                />
+                    },
+                  })
+                }
+                placeholder="Введите заголовок"
+              />
               </div>
               <div className="space-y-2">
                 <label className="text-sm">Описание</label>
@@ -533,7 +533,7 @@ export default function AdminPage() {
                           <label className="text-sm">
                             Описание (для этого изображения)
                           </label>
-                          <Textarea
+              <Textarea
                             value={image.description || ""}
                             onChange={(e) => {
                               const newHeroImages = [
@@ -595,10 +595,10 @@ export default function AdminPage() {
                 <label className="text-sm">Заголовок</label>
                 <Input
                   value={content.home.about.title}
-                  onChange={(e) =>
-                    setContent({
+                onChange={(e) =>
+                  setContent({
                       ...content,
-                      home: {
+                    home: {
                         ...content.home,
                         about: {
                           ...content.home.about,
@@ -621,14 +621,14 @@ export default function AdminPage() {
                         ...content.home,
                         about: {
                           ...content.home.about,
-                          description: e.target.value,
-                        },
+                        description: e.target.value,
                       },
-                    })
-                  }
-                  placeholder="Введите описание"
-                  className="min-h-[100px]"
-                />
+                    },
+                  })
+                }
+                placeholder="Введите описание"
+                className="min-h-[100px]"
+              />
               </div>
             </CardContent>
           </Card>
@@ -640,39 +640,39 @@ export default function AdminPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm">Заголовок</label>
-                <Input
+              <Input
                   value={content.home.cta.title}
-                  onChange={(e) =>
-                    setContent({
+                onChange={(e) =>
+                  setContent({
                       ...content,
-                      home: {
+                    home: {
                         ...content.home,
                         cta: {
                           ...content.home.cta,
                           title: e.target.value,
                         },
-                      },
-                    })
-                  }
+                    },
+                  })
+                }
                   placeholder="Введите заголовок"
-                />
+              />
               </div>
               <div className="space-y-2">
                 <label className="text-sm">Описание</label>
-                <Textarea
+              <Textarea
                   value={content.home.cta.description}
-                  onChange={(e) =>
-                    setContent({
+                onChange={(e) =>
+                  setContent({
                       ...content,
-                      home: {
+                    home: {
                         ...content.home,
-                        cta: {
+                      cta: {
                           ...content.home.cta,
-                          description: e.target.value,
-                        },
+                        description: e.target.value,
                       },
-                    })
-                  }
+                    },
+                  })
+                }
                   placeholder="Введите описание"
                   className="min-h-[100px]"
                 />

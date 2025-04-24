@@ -11,6 +11,21 @@ export default function ProgramsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const hash = window.location.hash;
+
+    if (hash) {
+      const programIndex = parseInt(hash.slice(1));
+      if (
+        programIndex >= 0 &&
+        programIndex < (content?.programs.programs?.length ?? 0) &&
+        content?.programs.programs[programIndex]
+      ) {
+        setSelectedProgram(content?.programs.programs[programIndex]);
+      }
+    }
+  }, [content]);
+
+  useEffect(() => {
     const fetchContent = async () => {
       try {
         setIsLoading(true);

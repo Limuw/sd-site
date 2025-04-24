@@ -12,6 +12,20 @@ export default function EventsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const eventIndex = parseInt(hash.slice(1));
+      if (
+        eventIndex >= 0 &&
+        eventIndex < (content?.events.events?.length ?? 0) &&
+        content?.events.events[eventIndex]
+      ) {
+        setSelectedEvent(content?.events.events[eventIndex]);
+      }
+    }
+  }, [content]);
+
+  useEffect(() => {
     const fetchContent = async () => {
       try {
         setIsLoading(true);
