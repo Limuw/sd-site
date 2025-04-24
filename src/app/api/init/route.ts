@@ -91,7 +91,7 @@ const defaultContent = {
         description:
           "Обучение олимпийским видам фехтования: рапира, шпага и сабля",
         image:
-          "https://images.unsplash.com/photo-1529144415895-6aae60109edc?q=80&w=2071&auto=format&fit=crop",
+          "https://img.olympics.com/images/image/private/t_16-9_960/f_auto/v1538355600/primary/zajqr4rxz6uznqbkv5b0",
         details:
           "Программа спортивного фехтования включает в себя обучение технике владения оружием, тактике боя, физической подготовке и участие в соревнованиях. Наши тренеры имеют большой опыт подготовки спортсменов разного уровня.",
       },
@@ -99,8 +99,7 @@ const defaultContent = {
         title: "Историческое фехтование",
         description:
           "Изучение исторических европейских техник фехтования на основе манускриптов",
-        image:
-          "https://images.unsplash.com/photo-1565873741571-2c7bd261ea27?q=80&w=2071&auto=format&fit=crop",
+        image: "https://good-claymore.ru/data/about/feht3.jpg",
         details:
           "Программа исторического фехтования основана на изучении аутентичных техник фехтования по историческим источникам. Мы изучаем длинный меч, рапиру, саблю и другие виды оружия разных исторических периодов.",
       },
@@ -109,7 +108,7 @@ const defaultContent = {
         description:
           "Сценическое фехтование для театра, кино и исторических реконструкций",
         image:
-          "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
+          "https://lh4.googleusercontent.com/proxy/7cbLYcx58s_nUpx2VKoOQBQmgMRaaYDdoPwUWjfhLmdBxAh4KHYDNzees5jO-di921A_XG5V-d78jPkalMnPSkGATV_sTA43givsdhQtAtUlZ7si0T_fVfTQ",
         details:
           "Артистическое фехтование сочетает в себе элементы фехтования и актерского мастерства. Наши ученики осваивают технику безопасного сценического боя, постановку фехтовальных номеров и участвуют в театрализованных представлениях.",
       },
@@ -124,7 +123,7 @@ const defaultContent = {
         date: "15 июля 2023",
         location: "Спортивный зал 'Олимп'",
         image:
-          "https://images.unsplash.com/photo-1529144415895-6aae60109edc?q=80&w=2071&auto=format&fit=crop",
+          "https://sirius-ft.ru/upload/news/921/t7swqw1r3bfromieokwkon3q27p0ouu9.jpg",
         description:
           "Ежегодный турнир по спортивному фехтованию для всех возрастных категорий",
         details:
@@ -134,8 +133,7 @@ const defaultContent = {
         title: "Мастер-класс по историческому фехтованию",
         date: "20 августа 2023",
         location: "Исторический парк 'Ретро'",
-        image:
-          "https://images.unsplash.com/photo-1565873741571-2c7bd261ea27?q=80&w=2071&auto=format&fit=crop",
+        image: "https://rycar.by/images/jd_gym/services/fehtovanie.jpg",
         description:
           "Погружение в мир средневекового фехтования с опытными инструкторами",
         details:
@@ -145,8 +143,7 @@ const defaultContent = {
         title: "Показательные выступления",
         date: "10 сентября 2023",
         location: "Центральная площадь города",
-        image:
-          "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
+        image: "https://donjon.ru/images/articles/hema-10.jpg",
         description:
           "Демонстрация техник артистического фехтования и сценических поединков",
         details:
@@ -159,43 +156,40 @@ const defaultContent = {
     description: "Фотографии с наших мероприятий, тренировок и выступлений",
     items: [
       {
-        image:
-          "https://images.unsplash.com/photo-1529144415895-6aae60109edc?q=80&w=2071&auto=format&fit=crop",
+        image: "https://www.mukdkn.ru/images/Kollektivi/33_alians_1.jpg",
         description: "Турнир по спортивному фехтованию",
       },
       {
         image:
-          "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
+          "https://www.kalashnikov.ru/wp-content/uploads/2016/02/sword3.jpg",
         description: "Тренировка юных фехтовальщиков",
       },
       {
         image:
-          "https://images.unsplash.com/photo-1565873741571-2c7bd261ea27?q=80&w=2071&auto=format&fit=crop",
+          "https://img.olympics.com/images/image/private/t_social_share_thumb/f_auto/primary/msx216jjv5nmynfz42ka",
         description: "Мастер-класс по историческому фехтованию",
       },
       {
         image:
-          "https://images.unsplash.com/photo-1622384389282-3c43adf781e4?q=80&w=1974&auto=format&fit=crop",
+          "https://img.olympics.com/images/image/private/t_16-9_960/f_auto/v1538355600/primary/zajqr4rxz6uznqbkv5b0",
         description: "Показательные выступления",
       },
       {
-        image:
-          "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?q=80&w=2070&auto=format&fit=crop",
+        image: "https://good-claymore.ru/data/about/feht3.jpg",
         description: "Соревнования по артистическому фехтованию",
       },
       {
         image:
-          "https://images.unsplash.com/photo-1561348799-889f5a909f59?q=80&w=1990&auto=format&fit=crop",
+          "https://lh4.googleusercontent.com/proxy/7cbLYcx58s_nUpx2VKoOQBQmgMRaaYDdoPwUWjfhLmdBxAh4KHYDNzees5jO-di921A_XG5V-d78jPkalMnPSkGATV_sTA43givsdhQtAtUlZ7si0T_fVfTQ",
         description: "Историческая реконструкция рыцарского турнира",
       },
       {
         image:
-          "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=2069&auto=format&fit=crop",
+          "https://sirius-ft.ru/upload/news/921/t7swqw1r3bfromieokwkon3q27p0ouu9.jpg",
         description: "Групповая тренировка фехтовальщиков",
       },
       {
-        image:
-          "https://images.unsplash.com/photo-1592125590566-0dc8675d4105?q=80&w=1974&auto=format&fit=crop",
+        image: "https://rycar.by/images/jd_gym/services/fehtovanie.jpg",
         description: "Детский клуб фехтования",
       },
     ],
@@ -233,7 +227,7 @@ const defaultContent = {
       telegram: "https://t.me/fencingclub",
     },
     mapLocation:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2244.397087990812!2d37.62601841575488!3d55.74881998045931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54af918bab1c1%3A0x5e3c5e0458ea4ad!2z0JrRgNC10LzQu9GN0LLRgdC60LDRjyDQvdCw0LEuLCAxLCDQnNC-0YHQutCy0LAsIDEwOTAxMg!5e0!3m2!1sru!2sru!4v1627376675639!5m2!1sru!2sru",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.349390522522!2d27.597260976880317!3d53.90916733246289!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfb2ada3f9f1%3A0x47b517482e40cddf!2zMS3QuSDQotCy0ZHRgNC00YvQuSDQv9C10YDQtdGD0LvQvtC6IDExLCDQnNC40L3RgdC6LCDQnNC40L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjCwg0JHQtdC70LDRgNGD0YHRjA!5e0!3m2!1sru!2slt!4v1745450970468!5m2!1sru!2slt",
   },
   blog: {
     title: "Блог",
