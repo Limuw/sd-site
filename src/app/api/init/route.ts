@@ -29,32 +29,30 @@ const defaultContent = {
   },
   home: {
     hero: {
-      title: "Фехтовальный клуб",
-      description: "Профессиональное обучение фехтованию для всех возрастов",
-      images: [
-        {
-          src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
-          alt: "Фехтовальный поединок",
-          title: "Фехтовальный клуб",
-          description:
-            "Профессиональное обучение фехтованию для всех возрастов",
-        },
-        {
-          src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
-          alt: "Тренировка по фехтованию",
-          title: "Фехтовальный клуб",
-          description:
-            "Профессиональное обучение фехтованию для всех возрастов",
-        },
-        {
-          src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
-          alt: "Фехтовальный турнир",
-          title: "Фехтовальный клуб",
-          description:
-            "Профессиональное обучение фехтованию для всех возрастов",
-        },
-      ],
+      title: "Школа ролевого фехтования и исторического боя",
+      description:
+        "Обучаем ролевому фехтованию в дружественной атмосфере для всех уровней подготовки",
     },
+    heroImages: [
+      {
+        src: "https://www.mukdkn.ru/images/Kollektivi/33_alians_1.jpg",
+        alt: "Ролевые события",
+        title: "Ролевые события",
+        description: "Проверьте свои навыки в реальном бою",
+      },
+      {
+        src: "https://www.kalashnikov.ru/wp-content/uploads/2016/02/sword3.jpg",
+        alt: "Тренировка по фехтованию",
+        title: "Тренировка по фехтованию",
+        description: "Тренировки для любого уровня подготовки",
+      },
+      {
+        src: "https://img.olympics.com/images/image/private/t_social_share_thumb/f_auto/primary/msx216jjv5nmynfz42ka",
+        alt: "Фехтовальный поединок",
+        title: "Фехтовальные поединки",
+        description: "Наберитесь реального опыта в поединках",
+      },
+    ],
     about: {
       title: "О нашем клубе",
       description:
@@ -248,7 +246,8 @@ const defaultContent = {
           "Краткий экскурс в историю развития фехтования как боевого искусства и спорта.",
         date: "2023-05-15",
         author: "Иван Петров",
-        image: "/images/blog/history.jpg",
+        image:
+          "https://185504.selcdn.ru/static/mushketer.reshops.ru/media/3.jpg",
         content: `# История фехтования: от древности до наших дней
 
 ## Древние истоки
@@ -296,7 +295,7 @@ const defaultContent = {
           "Советы начинающим фехтовальщикам по выбору первого спортивного оружия.",
         date: "2023-06-20",
         author: "Анна Смирнова",
-        image: "/images/blog/rapier.jpg",
+        image: "https://oruzhejnaya.ru/images/sword-master/kvetun/main.jpg",
         content: `# Выбор первой рапиры: на что обратить внимание
 
 Приобретение первой **личной рапиры** — важный шаг для каждого начинающего фехтовальщика. В этой статье мы рассмотрим ключевые моменты, на которые стоит обратить внимание при выборе.

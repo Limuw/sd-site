@@ -28,11 +28,11 @@ export default async function AboutPage() {
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-[#333333] mb-8">
+        <div className="text-center text-white">
+          <h1 className="text-4xl font-bold mb-8">
             О нашем клубе
           </h1>
-          <p className="text-xl text-[#333333] max-w-3xl mx-auto">
+          <p className="text-xl max-w-3xl mx-auto">
             {aboutData?.about?.description}
           </p>
         </div>
@@ -65,7 +65,7 @@ export default async function AboutPage() {
 
         {/* Ценности */}
         <div className="mt-16">
-          <h2 className="text-3xl font-bold text-[#333333] text-center mb-8">
+          <h2 className="text-3xl font-bold text-white text-center mb-8">
             Наши основные ценности
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -74,7 +74,7 @@ export default async function AboutPage() {
                 <h3 className="text-xl font-semibold text-[#BE1E2D] mb-2">
                   {value.title}
                 </h3>
-                <p className="text-[#333333]">{value.description}</p>
+                <p className="text-white">{value.description}</p>
               </div>
             ))}
           </div>

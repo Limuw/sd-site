@@ -41,6 +41,7 @@ export default function AdminPage() {
         title: "",
         description: "",
       },
+      heroImages: [],
     },
     programs: {
       title: "",
@@ -113,6 +114,7 @@ export default function AdminPage() {
                 title: data.home?.cta?.title || "",
                 description: data.home?.cta?.description || "",
               },
+              heroImages: data.home?.heroImages || [],
             },
             programs: {
               title: data.programs?.title || "",
@@ -184,7 +186,11 @@ export default function AdminPage() {
         <h1 className="text-3xl font-bold">Админ-панель</h1>
         <div className="flex items-center gap-4">
           <span className="text-sm">{saveStatus}</span>
-          <Button onClick={handleSave} disabled={isSaving} className="fixed bottom-5 right-5">
+          <Button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="fixed bottom-5 right-5"
+          >
             {isSaving ? "Сохранение..." : "Сохранить изменения"}
           </Button>
         </div>
@@ -352,85 +358,325 @@ export default function AdminPage() {
         <TabsContent value="home" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Главный заголовок</CardTitle>
+              <CardTitle>Секция Hero</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Input
-                value={content.home.hero.title}
-                onChange={(e) =>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm">Заголовок</label>
+                <Input
+                  value={content.home.hero.title}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      home: {
+                        ...content.home,
+                        hero: {
+                          ...content.home.hero,
+                          title: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                  placeholder="Введите заголовок"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm">Описание</label>
+                <Textarea
+                  value={content.home.hero.description}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      home: {
+                        ...content.home,
+                        hero: {
+                          ...content.home.hero,
+                          description: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                  placeholder="Введите описание"
+                  className="min-h-[100px]"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Изображения для слайдера Hero</CardTitle>
+              <Button
+                onClick={() => {
+                  const newHeroImages = [
+                    ...content.home.heroImages,
+                    {
+                      src: "",
+                      alt: "",
+                      title: "",
+                      description: "",
+                    },
+                  ];
                   setContent({
                     ...content,
                     home: {
                       ...content.home,
-                      hero: { ...content.home.hero, title: e.target.value },
+                      heroImages: newHeroImages,
                     },
-                  })
-                }
-                placeholder="Введите заголовок"
-              />
+                  });
+                }}
+                variant="outline"
+              >
+                Добавить изображение
+              </Button>
+            </CardHeader>
+            <CardContent>
+              {content.home.heroImages.length > 0 ? (
+                <div className="space-y-4">
+                  {content.home.heroImages.map((image, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col md:flex-row gap-4 items-start border rounded-lg p-4"
+                    >
+                      <div className="md:w-1/4 aspect-video relative rounded-md overflow-hidden bg-muted">
+                        {image.src ? (
+                          <div className="w-full h-full relative">
+                            <img
+                              src={image.src}
+                              alt={image.alt}
+                              className="object-cover w-full h-full"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-muted">
+                            <span className="text-sm text-muted-foreground">
+                              Превью не доступно
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1 space-y-3">
+                        <div className="space-y-1">
+                          <label className="text-sm">URL изображения</label>
+                          <Input
+                            value={image.src}
+                            onChange={(e) => {
+                              const newHeroImages = [
+                                ...content.home.heroImages,
+                              ];
+                              newHeroImages[index] = {
+                                ...image,
+                                src: e.target.value,
+                              };
+                              setContent({
+                                ...content,
+                                home: {
+                                  ...content.home,
+                                  heroImages: newHeroImages,
+                                },
+                              });
+                            }}
+                            placeholder="Введите URL изображения"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-sm">
+                            Альтернативный текст
+                          </label>
+                          <Input
+                            value={image.alt}
+                            onChange={(e) => {
+                              const newHeroImages = [
+                                ...content.home.heroImages,
+                              ];
+                              newHeroImages[index] = {
+                                ...image,
+                                alt: e.target.value,
+                              };
+                              setContent({
+                                ...content,
+                                home: {
+                                  ...content.home,
+                                  heroImages: newHeroImages,
+                                },
+                              });
+                            }}
+                            placeholder="Введите альтернативный текст"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-sm">
+                            Заголовок (для этого изображения)
+                          </label>
+                          <Input
+                            value={image.title || ""}
+                            onChange={(e) => {
+                              const newHeroImages = [
+                                ...content.home.heroImages,
+                              ];
+                              newHeroImages[index] = {
+                                ...image,
+                                title: e.target.value,
+                              };
+                              setContent({
+                                ...content,
+                                home: {
+                                  ...content.home,
+                                  heroImages: newHeroImages,
+                                },
+                              });
+                            }}
+                            placeholder="Введите заголовок для этого изображения"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-sm">
+                            Описание (для этого изображения)
+                          </label>
+                          <Textarea
+                            value={image.description || ""}
+                            onChange={(e) => {
+                              const newHeroImages = [
+                                ...content.home.heroImages,
+                              ];
+                              newHeroImages[index] = {
+                                ...image,
+                                description: e.target.value,
+                              };
+                              setContent({
+                                ...content,
+                                home: {
+                                  ...content.home,
+                                  heroImages: newHeroImages,
+                                },
+                              });
+                            }}
+                            placeholder="Введите описание для этого изображения"
+                            className="min-h-[80px]"
+                          />
+                        </div>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => {
+                            const newHeroImages = [...content.home.heroImages];
+                            newHeroImages.splice(index, 1);
+                            setContent({
+                              ...content,
+                              home: {
+                                ...content.home,
+                                heroImages: newHeroImages,
+                              },
+                            });
+                          }}
+                          className="mt-2"
+                        >
+                          Удалить
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  Нет изображений. Нажмите &quot;Добавить изображение&quot;,
+                  чтобы добавить новое.
+                </div>
+              )}
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Описание на главной</CardTitle>
+              <CardTitle>Секция About</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Textarea
-                value={content.home.hero.description}
-                onChange={(e) =>
-                  setContent({
-                    ...content,
-                    home: {
-                      ...content.home,
-                      hero: {
-                        ...content.home.hero,
-                        description: e.target.value,
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm">Заголовок</label>
+                <Input
+                  value={content.home.about.title}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      home: {
+                        ...content.home,
+                        about: {
+                          ...content.home.about,
+                          title: e.target.value,
+                        },
                       },
-                    },
-                  })
-                }
-                placeholder="Введите описание"
-                className="min-h-[100px]"
-              />
+                    })
+                  }
+                  placeholder="Введите заголовок"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm">Описание</label>
+                <Textarea
+                  value={content.home.about.description}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      home: {
+                        ...content.home,
+                        about: {
+                          ...content.home.about,
+                          description: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                  placeholder="Введите описание"
+                  className="min-h-[100px]"
+                />
+              </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Призыв к действию</CardTitle>
+              <CardTitle>Секция CTA</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Input
-                value={content.home.cta.title}
-                onChange={(e) =>
-                  setContent({
-                    ...content,
-                    home: {
-                      ...content.home,
-                      cta: { ...content.home.cta, title: e.target.value },
-                    },
-                  })
-                }
-                placeholder="Введите заголовок CTA"
-              />
-              <Textarea
-                value={content.home.cta.description}
-                onChange={(e) =>
-                  setContent({
-                    ...content,
-                    home: {
-                      ...content.home,
-                      cta: {
-                        ...content.home.cta,
-                        description: e.target.value,
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm">Заголовок</label>
+                <Input
+                  value={content.home.cta.title}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      home: {
+                        ...content.home,
+                        cta: {
+                          ...content.home.cta,
+                          title: e.target.value,
+                        },
                       },
-                    },
-                  })
-                }
-                placeholder="Введите описание CTA"
-                className="min-h-[100px] mt-4"
-              />
+                    })
+                  }
+                  placeholder="Введите заголовок"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm">Описание</label>
+                <Textarea
+                  value={content.home.cta.description}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      home: {
+                        ...content.home,
+                        cta: {
+                          ...content.home.cta,
+                          description: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                  placeholder="Введите описание"
+                  className="min-h-[100px]"
+                />
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

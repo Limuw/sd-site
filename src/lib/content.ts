@@ -16,6 +16,12 @@ export interface HomeContent {
     title: string;
     description: string;
   };
+  heroImages: {
+    src: string;
+    alt: string;
+    title?: string;
+    description?: string;
+  }[];
   about: {
     title: string;
     description: string;
@@ -146,6 +152,7 @@ export async function getContent(): Promise<Content | null> {
           title: data.home?.hero?.title || "",
           description: data.home?.hero?.description || "",
         },
+        heroImages: data.home?.heroImages || [],
         about: {
           title: data.home?.about?.title || "",
           description: data.home?.about?.description || "",
@@ -210,6 +217,26 @@ function getDefaultContent(): Content {
         title: "",
         description: "",
       },
+      heroImages: [
+        {
+          src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
+          alt: "Фехтовальный поединок",
+          title: "Искусство фехтования",
+          description: "Овладейте древним искусством владения мечом",
+        },
+        {
+          src: "https://images.unsplash.com/photo-1614956746679-5a517121c486?q=80&w=2070&auto=format&fit=crop",
+          alt: "Тренировка по фехтованию",
+          title: "Присоединяйтесь к нам",
+          description: "Тренировки для любого уровня подготовки",
+        },
+        {
+          src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
+          alt: "Фехтовальный турнир",
+          title: "Турниры и соревнования",
+          description: "Проверьте свои навыки в реальном бою",
+        },
+      ],
       about: {
         title: "",
         description: "",

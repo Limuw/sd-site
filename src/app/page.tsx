@@ -12,21 +12,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { getContent, Content } from "@/lib/content";
 
-const heroImages = [
-  {
-    src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
-    alt: "Фехтовальный поединок",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
-    alt: "Тренировка по фехтованию",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop",
-    alt: "Фехтовальный турнир",
-  },
-];
-
 export default function Home() {
   const [api, setApi] = useState<CarouselApi>();
   const [content, setContent] = useState<Content | null>(null);
@@ -60,7 +45,7 @@ export default function Home() {
           opts={{ loop: true }}
         >
           <CarouselContent>
-            {heroImages.map((image, index) => (
+            {content?.home?.heroImages?.map((image, index) => (
               <CarouselItem key={index}>
                 <div className="relative w-full h-[80vh]">
                   <Image
@@ -73,10 +58,10 @@ export default function Home() {
                   <div className="absolute inset-0 bg-[#333333]/70 flex items-center justify-center">
                     <div className="text-center text-white max-w-2xl px-4">
                       <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                        {content?.home?.hero?.title}
+                        {image.title || content?.home?.hero?.title}
                       </h1>
                       <p className="text-xl md:text-2xl">
-                        {content?.home?.hero?.description}
+                        {image.description || content?.home?.hero?.description}
                       </p>
                     </div>
                   </div>
