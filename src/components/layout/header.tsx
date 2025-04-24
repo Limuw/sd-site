@@ -67,11 +67,11 @@ export function Header() {
             <Link href="/">
               <span className="sr-only">Клуб Ролевого Фехтования</span>
               <Image
-                className="h-10 w-auto"
-                src="/logo.svg"
+                className="h-20 w-16 min-w-16"
+                src="/favicon.png"
                 alt="Логотип"
-                width={40}
-                height={40}
+                width={140}
+                height={140}
               />
             </Link>
           </div>

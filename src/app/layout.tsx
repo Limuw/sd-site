@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Roleplay Fencing Club",
   description: "Experience the art of fencing in a unique roleplay setting",
   icons: {
-    icon: "/logo.svg",
+    icon: "/favicon.png",
   },
 };
 

@@ -184,7 +184,7 @@ export default function AdminPage() {
         <h1 className="text-3xl font-bold">Админ-панель</h1>
         <div className="flex items-center gap-4">
           <span className="text-sm">{saveStatus}</span>
-          <Button onClick={handleSave} disabled={isSaving}>
+          <Button onClick={handleSave} disabled={isSaving} className="fixed bottom-5 right-5">
             {isSaving ? "Сохранение..." : "Сохранить изменения"}
           </Button>
         </div>
