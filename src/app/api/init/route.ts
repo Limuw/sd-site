@@ -344,6 +344,7 @@ const defaultContent = {
       },
     ],
   },
+  reviews: [],
 };
 
 export async function GET() {

@@ -113,6 +113,12 @@ export interface BlogContent {
   entries: BlogEntry[];
 }
 
+export interface Review {
+  id: string;
+  email: string;
+  message: string;
+}
+
 export interface Content {
   about: AboutContent;
   home: HomeContent;
@@ -122,6 +128,7 @@ export interface Content {
   prices: PricesContent;
   contact: ContactContent;
   blog: BlogContent;
+  reviews: Review[];
 }
 
 export async function getContent(): Promise<Content | null> {
@@ -196,6 +203,7 @@ export async function getContent(): Promise<Content | null> {
         description: data.blog?.description || "",
         entries: data.blog?.entries || [],
       },
+      reviews: data.reviews || [],
     };
   } catch (error) {
     console.error("Error fetching content:", error);
@@ -395,6 +403,7 @@ function getDefaultContent(): Content {
         },
       ],
     },
+    reviews: [],
   };
 }
 
