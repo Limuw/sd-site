@@ -7,9 +7,9 @@ const events = await getEvents();
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen dark">
+    <div className="min-h-screen dark bg-[#0a0a0a]">
       <Header programs={programs} events={events} />
-      <main className="bg-black">{children}</main>
+      <main>{children}</main>
       <ChatWidget />
     </div>
   );

@@ -82,6 +82,7 @@ export default function AdminPage() {
       entries: [],
     },
     reviews: [],
+    faq: [],
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -156,6 +157,7 @@ export default function AdminPage() {
               entries: data.blog?.entries || [],
             },
             reviews: data.reviews || [],
+            faq: data.faq || [],
           };
           setContent(initializedData);
         }
@@ -199,7 +201,7 @@ export default function AdminPage() {
       </div>
 
       <Tabs defaultValue="about">
-        <TabsList className="grid w-full grid-cols-9">
+        <TabsList className="grid w-full grid-cols-10">
           <TabsTrigger value="home">Главная</TabsTrigger>
           <TabsTrigger value="about">О нас</TabsTrigger>
           <TabsTrigger value="programs">Программы</TabsTrigger>
@@ -209,6 +211,7 @@ export default function AdminPage() {
           <TabsTrigger value="contact">Контакты</TabsTrigger>
           <TabsTrigger value="blog">Блог</TabsTrigger>
           <TabsTrigger value="reviews">Отзывы</TabsTrigger>
+          <TabsTrigger value="faq">FAQ</TabsTrigger>
         </TabsList>
 
         <TabsContent value="about" className="space-y-4">
@@ -1906,6 +1909,104 @@ export default function AdminPage() {
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
                   Нет отзывов от пользователей.
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="faq" className="space-y-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Часто задаваемые вопросы</CardTitle>
+              <Button
+                onClick={() => {
+                  const newFaq = {
+                    question: "Новый вопрос",
+                    answer: "Ответ на вопрос",
+                  };
+                  setContent({
+                    ...content,
+                    faq: [...content.faq, newFaq],
+                  });
+                }}
+                variant="outline"
+              >
+                Добавить вопрос
+              </Button>
+            </CardHeader>
+            <CardContent>
+              {content.faq.length > 0 ? (
+                <div className="space-y-4">
+                  {content.faq.map((faq, index) => (
+                    <Card key={index} className="overflow-hidden">
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-start gap-4">
+                          <div className="flex-1 space-y-4">
+                            <div className="space-y-2">
+                              <label className="text-sm font-medium">
+                                Вопрос
+                              </label>
+                              <Input
+                                value={faq.question}
+                                onChange={(e) => {
+                                  const updatedFaqs = [...content.faq];
+                                  updatedFaqs[index] = {
+                                    ...faq,
+                                    question: e.target.value,
+                                  };
+                                  setContent({
+                                    ...content,
+                                    faq: updatedFaqs,
+                                  });
+                                }}
+                                placeholder="Введите вопрос"
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <label className="text-sm font-medium">
+                                Ответ
+                              </label>
+                              <Textarea
+                                value={faq.answer}
+                                onChange={(e) => {
+                                  const updatedFaqs = [...content.faq];
+                                  updatedFaqs[index] = {
+                                    ...faq,
+                                    answer: e.target.value,
+                                  };
+                                  setContent({
+                                    ...content,
+                                    faq: updatedFaqs,
+                                  });
+                                }}
+                                placeholder="Введите ответ"
+                                className="min-h-[100px]"
+                              />
+                            </div>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => {
+                              const updatedFaqs = [...content.faq];
+                              updatedFaqs.splice(index, 1);
+                              setContent({
+                                ...content,
+                                faq: updatedFaqs,
+                              });
+                            }}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  Нет вопросов. Нажмите "Добавить вопрос", чтобы создать новый.
                 </div>
               )}
             </CardContent>

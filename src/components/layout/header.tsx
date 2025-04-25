@@ -55,6 +55,10 @@ export function Header({ programs, events }: HeaderProps) {
     },
     { name: "Контакты", href: "/contact" },
     { name: "Блог", href: "/blog" },
+    {
+      name: "FAQ",
+      href: "/faq",
+    },
   ];
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -66,10 +70,10 @@ export function Header({ programs, events }: HeaderProps) {
       onMouseLeave={() => setActiveSubmenu(null)}
     >
       <nav
-        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-20 py-6"
+        className="mx-auto max-w-7xl px-4 sm:px-6 xl:px-8 z-20 py-6"
         aria-label="Top"
       >
-        <div className="flex w-full items-center justify-between border-b border-[#BE1E2D] lg:border-none">
+        <div className="flex w-full items-center justify-between border-b border-[#BE1E2D] xl:border-none">
           <div className="flex items-center">
             <Link href="/">
               <span className="sr-only">Клуб Ролевого Фехтования</span>
@@ -82,7 +86,7 @@ export function Header({ programs, events }: HeaderProps) {
               />
             </Link>
           </div>
-          <div className="ml-10 hidden space-x-8 lg:flex">
+          <div className="ml-10 hidden space-x-8 xl:flex">
             {navigation.map((item) => (
               <div
                 key={item.name}
@@ -96,7 +100,7 @@ export function Header({ programs, events }: HeaderProps) {
                   {item.name}
                 </Link>
                 {item.submenu && activeSubmenu === item.name && (
-                  <div className="absolute z-10 top-full left-0 mt-2 w-48 rounded-md bg-[#333333] overflow-hidden shadow-lg ring-1 ring-[#BE1E2D]">
+                  <div className="absolute z-10 top-full left-0 mt-2 w-48 rounded-md bg-[#333333] overflow-hidden shadow-xl ring-1 ring-[#BE1E2D]">
                     {item.submenu.map((subItem) => (
                       <Link
                         key={subItem.name}
@@ -130,7 +134,7 @@ export function Header({ programs, events }: HeaderProps) {
               </SignInButton>
             </SignedOut>
           </div>
-          <div className="flex lg:hidden">
+          <div className="flex xl:hidden">
             <button
               type="button"
               className="inline-flex items-center justify-center rounded-md p-2 text-white"
@@ -148,7 +152,7 @@ export function Header({ programs, events }: HeaderProps) {
         {/* Mobile menu */}
         <div
           className={clsx(
-            "lg:hidden absolute transition-all z-10 bg-[#333333]/50 backdrop-blur-2xl left-0 w-full bottom-full",
+            "xl:hidden absolute transition-all z-10 bg-[#333333]/50 backdrop-blur-2xl left-0 w-full bottom-full",
             mobileMenuOpen ? "translate-y-[calc(100%+80px)]" : "translate-y-0"
           )}
         >
