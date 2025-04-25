@@ -2006,7 +2006,8 @@ export default function AdminPage() {
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
-                  Нет вопросов. Нажмите "Добавить вопрос", чтобы создать новый.
+                  Нет вопросов. Нажмите &quot;Добавить вопрос&quot;, чтобы
+                  создать новый.
                 </div>
               )}
             </CardContent>
