@@ -9,7 +9,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { getContent, Content } from "@/lib/content";
 
 export default function Home() {
