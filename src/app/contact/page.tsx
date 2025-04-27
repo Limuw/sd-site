@@ -8,6 +8,7 @@ import {
   FaVk,
   FaInstagram,
   FaTelegram,
+  FaTiktok,
 } from "react-icons/fa";
 
 export default function ContactPage() {
@@ -124,6 +125,16 @@ export default function ContactPage() {
                       className="text-white hover:text-[#D4B996] transition-colors"
                     >
                       <FaTelegram className="text-2xl" />
+                    </a>
+                  )}
+                  {content.contact.socialLinks.tiktok && (
+                    <a
+                      href={content.contact.socialLinks.tiktok}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white hover:text-[#D4B996] transition-colors"
+                    >
+                      <FaTiktok className="text-2xl" />
                     </a>
                   )}
                 </div>

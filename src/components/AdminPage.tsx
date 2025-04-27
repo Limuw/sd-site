@@ -37,10 +37,6 @@ export const AdminPageContent = () => {
         title: "",
         description: "",
       },
-      cta: {
-        title: "",
-        description: "",
-      },
       heroImages: [],
     },
     programs: {
@@ -73,6 +69,7 @@ export const AdminPageContent = () => {
         vk: "",
         instagram: "",
         telegram: "",
+        tiktok: "",
       },
       mapLocation: "",
     },
@@ -112,10 +109,6 @@ export const AdminPageContent = () => {
                 title: data.home?.about?.title || "",
                 description: data.home?.about?.description || "",
               },
-              cta: {
-                title: data.home?.cta?.title || "",
-                description: data.home?.cta?.description || "",
-              },
               heroImages: data.home?.heroImages || [],
             },
             programs: {
@@ -148,6 +141,7 @@ export const AdminPageContent = () => {
                 vk: data.contact?.socialLinks?.vk || "",
                 instagram: data.contact?.socialLinks?.instagram || "",
                 telegram: data.contact?.socialLinks?.telegram || "",
+                tiktok: data.contact?.socialLinks?.tiktok || "",
               },
               mapLocation: data.contact?.mapLocation || "",
             },
@@ -643,53 +637,6 @@ export const AdminPageContent = () => {
                         ...content.home,
                         about: {
                           ...content.home.about,
-                          description: e.target.value,
-                        },
-                      },
-                    })
-                  }
-                  placeholder="Введите описание"
-                  className="min-h-[100px]"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Секция CTA</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm">Заголовок</label>
-                <Input
-                  value={content.home.cta.title}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      home: {
-                        ...content.home,
-                        cta: {
-                          ...content.home.cta,
-                          title: e.target.value,
-                        },
-                      },
-                    })
-                  }
-                  placeholder="Введите заголовок"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm">Описание</label>
-                <Textarea
-                  value={content.home.cta.description}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      home: {
-                        ...content.home,
-                        cta: {
-                          ...content.home.cta,
                           description: e.target.value,
                         },
                       },
@@ -1549,6 +1496,26 @@ export const AdminPageContent = () => {
                     })
                   }
                   placeholder="Введите ссылку на Telegram"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm">TikTok</label>
+                <Input
+                  value={content.contact.socialLinks.tiktok}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      contact: {
+                        ...content.contact,
+                        socialLinks: {
+                          ...content.contact.socialLinks,
+                          tiktok: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                  placeholder="Введите ссылку на TikTok"
                 />
               </div>
             </CardContent>

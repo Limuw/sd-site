@@ -26,10 +26,6 @@ export interface HomeContent {
     title: string;
     description: string;
   };
-  cta: {
-    title: string;
-    description: string;
-  };
 }
 
 export interface Program {
@@ -90,9 +86,10 @@ export interface ContactContent {
   phone: string;
   address: string;
   socialLinks: {
-    vk?: string;
-    instagram?: string;
-    telegram?: string;
+    vk: string;
+    instagram: string;
+    telegram: string;
+    tiktok: string;
   };
   mapLocation: string;
 }
@@ -169,10 +166,6 @@ export async function getContent(): Promise<Content | null> {
         about: {
           title: data.home?.about?.title || "",
           description: data.home?.about?.description || "",
-        },
-        cta: {
-          title: data.home?.cta?.title || "",
-          description: data.home?.cta?.description || "",
         },
       },
       programs: {
@@ -256,10 +249,6 @@ export function getDefaultContent(): Content {
         title: "",
         description: "",
       },
-      cta: {
-        title: "",
-        description: "",
-      },
     },
     programs: {
       title: "Наши программы",
@@ -292,6 +281,7 @@ export function getDefaultContent(): Content {
         vk: "https://vk.com/fencingclub",
         instagram: "https://instagram.com/fencingclub",
         telegram: "https://t.me/fencingclub",
+        tiktok: "https://tiktok.com/@fencingclub",
       },
       mapLocation:
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2244.397087990812!2d37.62601841575488!3d55.74881998045931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54af918bab1c1%3A0x5e3c5e0458ea4ad!2z0JrRgNC10LzQu9GN0LLRgdC60LDRjyDQvdCw0LEuLCAxLCDQnNC-0YHQutCy0LAsIDEwOTAxMg!5e0!3m2!1sru!2sru!4v1627376675639!5m2!1sru!2sru",
