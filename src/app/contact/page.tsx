@@ -64,7 +64,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {/* Contact Information */}
           <div className="bg-[#333333]/50 p-8 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-6 text-[#BE1E2D]">
+            <h2 className="text-2xl font-semibold mb-6 text-white">
               Контактная информация
             </h2>
             <div className="space-y-4">

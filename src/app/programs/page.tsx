@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getContent, Content, Program } from "@/lib/content";
-import { Button } from "@/components/ui/button";
 import { Markdown } from "@/components/markdown";
 
 export default function ProgramsPage() {
@@ -116,27 +115,19 @@ export default function ProgramsPage() {
         {selectedProgram && (
           <div className="bg-[#333333]/50 p-6 rounded-lg">
             <h2 className="text-3xl font-bold mb-4">{selectedProgram.title}</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="relative h-60 md:h-full rounded-lg overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-8 h-fit">
+              <div className="rounded-lg w-fit overflow-hidden">
                 <Image
-                  src={
-                    selectedProgram.image ||
-                    "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop"
-                  }
+                  src={selectedProgram.image}
                   alt={selectedProgram.title || "Program Image"}
                   fill
-                  className="object-cover"
+                  className="!h-60 !w-auto !relative"
                 />
               </div>
-              <div>
+              <div className="h-full">
                 <Markdown className="text-[#D4B996]">
                   {selectedProgram.details}
                 </Markdown>
-                <div className="mt-8">
-                  <Button className="bg-[#BE1E2D] text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-[#BE1E2D]/90 transition-colors">
-                    Записаться на программу
-                  </Button>
-                </div>
               </div>
             </div>
           </div>

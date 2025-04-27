@@ -194,8 +194,8 @@ export const AdminPageContent = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="about">
-        <TabsList className="grid w-full grid-cols-10">
+      <Tabs defaultValue="home">
+        <TabsList className="grid w-full grid-cols-10 sticky top-32 z-50">
           <TabsTrigger value="home" className="cursor-pointer">
             Главная
           </TabsTrigger>

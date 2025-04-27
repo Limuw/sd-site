@@ -24,7 +24,7 @@ export default async function FaqPage() {
 
   return (
     <div className="container mx-auto pb-auto py-16 px-4 text-white">
-      <h1 className="text-4xl font-bold mb-8 text-center">
+      <h1 className="text-4xl font-bold mb-8 text-center text-[#BE1E2D]">
         Часто задаваемые вопросы
       </h1>
       <div className="max-w-3xl mx-auto">
