@@ -97,14 +97,14 @@ export default function ContactPage() {
                   Мы в социальных сетях
                 </h3>
                 <div className="flex gap-4">
-                  {content.contact.socialLinks.vk && (
+                  {content.contact.socialLinks.telegram && (
                     <a
-                      href={content.contact.socialLinks.vk}
+                      href={content.contact.socialLinks.telegram}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-white hover:text-[#D4B996] transition-colors"
                     >
-                      <FaVk className="text-2xl" />
+                      <FaTelegram className="text-2xl" />
                     </a>
                   )}
                   {content.contact.socialLinks.instagram && (
@@ -117,14 +117,14 @@ export default function ContactPage() {
                       <FaInstagram className="text-2xl" />
                     </a>
                   )}
-                  {content.contact.socialLinks.telegram && (
+                  {content.contact.socialLinks.vk && (
                     <a
-                      href={content.contact.socialLinks.telegram}
+                      href={content.contact.socialLinks.vk}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-white hover:text-[#D4B996] transition-colors"
                     >
-                      <FaTelegram className="text-2xl" />
+                      <FaVk className="text-2xl" />
                     </a>
                   )}
                   {content.contact.socialLinks.tiktok && (

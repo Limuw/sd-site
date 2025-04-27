@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Instagram, Phone, MessageSquare } from "lucide-react";
+import { Instagram, Phone } from "lucide-react";
+import { FaTelegram } from "react-icons/fa";
 
 export function Footer() {
   return (
@@ -30,7 +31,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-white hover:text-[#D4B996] transition-colors"
             >
-              <MessageSquare className="h-5 w-5" />
+              <FaTelegram className="h-5 w-5" />
               <span>Telegram</span>
             </Link>
             <Link
