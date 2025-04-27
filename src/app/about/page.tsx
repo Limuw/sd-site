@@ -49,7 +49,7 @@ export default async function AboutPage() {
                 key={index}
                 className="p-6 rounded-lg shadow-lg bg-[#D4B996]/20"
               >
-                <h2 className="text-2xl font-bold text-white mb-4">
+                <h2 className="text-2xl font-bold text-white mb-4 text-center">
                   {section.title}
                 </h2>
                 <p>{section.description}</p>
@@ -66,7 +66,7 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-[#D4B996]">
             {aboutData?.about?.values?.map((value: Value, index: number) => (
               <div key={index} className="bg-[#D4B996]/20 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <h3 className="text-xl font-semibold text-white mb-2 text-center">
                   {value.title}
                 </h3>
                 <p>{value.description}</p>

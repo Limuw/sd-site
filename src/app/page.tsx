@@ -88,8 +88,8 @@ export default function Home() {
             <div
               key={index}
               className="p-6 rounded-lg shadow-lg bg-[#D4B996]/20"
-            >
-              <h2 className="text-2xl font-bold text-white mb-4">
+>
+              <h2 className="text-2xl font-bold text-white mb-4 text-center">
                 {section.title}
               </h2>
               <p>{section.description}</p>

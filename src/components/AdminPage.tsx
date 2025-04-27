@@ -264,24 +264,6 @@ export const AdminPageContent = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Заголовок раздела ценностей</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Input
-                value={content.about.valuesTitle}
-                onChange={(e) =>
-                  setContent({
-                    ...content,
-                    about: { ...content.about, valuesTitle: e.target.value },
-                  })
-                }
-                placeholder="Введите заголовок раздела ценностей"
-              />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
               <CardTitle>Разделы</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -351,7 +333,25 @@ export const AdminPageContent = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Ценности</CardTitle>
+              <CardTitle>Заголовок подраздела</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                value={content.about.valuesTitle}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    about: { ...content.about, valuesTitle: e.target.value },
+                  })
+                }
+                placeholder="Введите заголовок подраздела"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Подраздел</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {content.about.values.map((value, index) => (
@@ -413,7 +413,7 @@ export const AdminPageContent = () => {
                   });
                 }}
               >
-                Добавить ценность
+                Добавить пункт подраздела
               </Button>
             </CardContent>
           </Card>
