@@ -18,7 +18,7 @@ import {
 import { Markdown } from "@/components/markdown";
 
 export const AdminPageContent = () => {
-  const { userId, isLoaded } = useAuth();
+  const { isLoaded } = useAuth();
 
   const [content, setContent] = useState<Content>({
     about: {
@@ -176,7 +176,7 @@ export const AdminPageContent = () => {
     setTimeout(() => setSaveStatus(""), 3000);
   };
 
-  if (!isLoaded || userId !== "user_2wJZwKAQRkfIXVbmJIVQtRLLQ7b") {
+  if (!isLoaded) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center">
         <p>Пожалуйста, войдите для доступа к админ-панели.</p>
@@ -1886,6 +1886,20 @@ export const AdminPageContent = () => {
                               {review.email}
                             </CardTitle>
                           </div>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => {
+                              const updatedReviews = [...content.reviews];
+                              updatedReviews.splice(index, 1);
+                              setContent({
+                                ...content,
+                                reviews: updatedReviews,
+                              });
+                            }}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
                         </div>
                       </CardHeader>
                       <CardContent>

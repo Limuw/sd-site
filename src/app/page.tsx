@@ -40,7 +40,7 @@ export default function Home() {
       <section className="relative h-[80vh] w-full">
         <Carousel
           setApi={setApi}
-          className="w-full h-full"
+          className="w-full h-full relative"
           opts={{ loop: true }}
         >
           <CarouselContent>
@@ -68,8 +68,8 @@ export default function Home() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-4" />
-          <CarouselNext className="right-4" />
+          <CarouselPrevious className="left-4 md:bottom-auto bottom-0 md:top-1/2 top-auto !bg-[#BE1E2D] text-white cursor-pointer hover:scale-110 transition-all active:scale-95 md:w-12 md:h-12" />
+          <CarouselNext className="right-4 md:bottom-auto bottom-0 md:top-1/2 top-auto !bg-[#BE1E2D] text-white cursor-pointer hover:scale-110 transition-all active:scale-95 md:w-12 md:h-12" />
         </Carousel>
       </section>
 
