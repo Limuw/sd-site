@@ -11,6 +11,11 @@ import {
 import { useEffect, useState } from "react";
 import { getContent, Content } from "@/lib/content";
 
+interface Section {
+  title: string;
+  description: string;
+}
+
 export default function Home() {
   const [api, setApi] = useState<CarouselApi>();
   const [content, setContent] = useState<Content | null>(null);
@@ -78,25 +83,18 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-center mb-8 text-[#BE1E2D]">
           {content?.home?.about?.title}
         </h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="text-center p-6 bg-[#D4B996]/20 rounded-lg">
-            <h3 className="text-xl font-semibold mb-4 text-white">
-              Опытные инструкторы
-            </h3>
-            <p className="text-[#D4B996]">{content?.about?.instructors} </p>
-          </div>
-          <div className="text-center p-6 bg-[#D4B996]/20 rounded-lg">
-            <h3 className="text-xl font-semibold mb-4 text-white">
-              Ролевая направленность
-            </h3>
-            <p className="text-[#D4B996]">{content?.about?.description} </p>
-          </div>
-          <div className="text-center p-6 bg-[#D4B996]/20 rounded-lg">
-            <h3 className="text-xl font-semibold mb-4 text-white">
-              Сообщество
-            </h3>
-            <p className="text-[#D4B996]">{content?.about?.mission}</p>
-          </div>
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3 text-[#D4B996]">
+          {content?.about?.sections?.map((section: Section, index: number) => (
+            <div
+              key={index}
+              className="p-6 rounded-lg shadow-lg bg-[#D4B996]/20"
+            >
+              <h2 className="text-2xl font-bold text-white mb-4">
+                {section.title}
+              </h2>
+              <p>{section.description}</p>
+            </div>
+          ))}
         </div>
       </section>
     </main>
