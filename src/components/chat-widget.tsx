@@ -5,9 +5,14 @@ import clsx from "clsx";
 import { useUser } from "@clerk/nextjs";
 import { SignInButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
+import { usePathname } from "next/navigation";
 
 export function ChatWidget() {
+  const pathname = usePathname();
+  const isAdmin = pathname?.includes("/admin");
   const [isOpen, setIsOpen] = useState(false);
+
+  const [isSent, setIsSent] = useState(false);
 
   const [hidden, setHidden] = useState(false);
 
@@ -16,12 +21,14 @@ export function ChatWidget() {
   const [messages, setMessages] = useState([
     {
       id: 0,
-      text: "Привет! Свяжитесь с нами, если у вас есть вопросы или предложения!",
+      text: "Здравствуйте! Оставьте отзыв о нашем клубе, чтобы мы могли стать лучше!",
       isBot: true,
     },
   ]);
 
   const { isSignedIn, user } = useUser();
+
+  if (isAdmin) return null;
 
   const handleSendMessage = (message: string) => {
     setMessages([
@@ -49,7 +56,7 @@ export function ChatWidget() {
       {/* Chat bubble */}
       {!isOpen && (
         <div
-          className="flex items-center justify-center w-14 h-14 rounded-full bg-[#BE1E2D] text-white cursor-pointer shadow-lg hover:bg-[#a81a26] transition-colors"
+          className="flex items-center justify-center w-14 h-14 rounded-full bg-[#BE1E2D] text-white cursor-pointer shadow-lg hover:bg-[#a81a26] transition-all hover:scale-110 active:scale-95"
           onClick={() => setIsOpen(true)}
         >
           <svg
@@ -73,10 +80,10 @@ export function ChatWidget() {
         <div className="w-80 h-96 bg-white rounded-lg shadow-xl flex flex-col overflow-hidden">
           {/* Header */}
           <div className="bg-[#BE1E2D] px-4 py-3 text-white flex justify-between items-center">
-            <h3 className="font-medium">Чат поддержки</h3>
+            <h3 className="font-medium">Оставить отзыв</h3>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white hover:text-gray-200"
+              className="text-white hover:text-gray-200 cursor-pointer"
             >
               <X size={18} />
             </button>
@@ -110,12 +117,13 @@ export function ChatWidget() {
                   className="flex-1 border rounded-l-md py-1 h-10 px-3 resize-none focus:outline-none ring-2 ring-[#BE1E2D] focus:border-transparent disabled:opacity-50"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  disabled={messages.length > 1}
+                  disabled={isSent}
                 />
                 <button
                   className="bg-[#BE1E2D] text-white cursor-pointer flex items-center justify-center !h-10 px-4 rounded-r-md hover:bg-[#a81a26] ring-[#BE1E2D] ring-2 disabled:opacity-50"
                   onClick={async () => {
                     if (message.trim() === "") return;
+                    setIsSent(true);
                     const response = await fetch("/api/addReview", {
                       method: "POST",
                       body: JSON.stringify({
@@ -128,7 +136,7 @@ export function ChatWidget() {
                       handleSendMessage(message.trim());
                     }
                   }}
-                  disabled={messages.length > 1}
+                  disabled={isSent}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

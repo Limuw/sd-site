@@ -100,22 +100,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="bg-[#333333] py-20">
-        <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-3xl font-bold mb-6 text-white">
-            {content?.home?.cta?.title || "Готовы начать свое путешествие?"}
-          </h2>
-          <p className="text-xl mb-8 text-[#D4B996]">
-            {content?.home?.cta?.description ||
-              "Присоединяйтесь к нашему клубу сегодня и начните свое приключение в мире ролевого фехтования"}
-          </p>
-          <Button className="bg-[#BE1E2D] text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-[#BE1E2D]/90 transition-colors">
-            Присоединиться
-          </Button>
-        </div>
-      </section>
     </main>
   );
 }

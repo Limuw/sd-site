@@ -23,9 +23,10 @@ interface MenuItem {
 interface HeaderProps {
   programs: string[];
   events: string[];
+  isAdmin: boolean;
 }
 
-export function Header({ programs, events }: HeaderProps) {
+export function Header({ programs, events, isAdmin }: HeaderProps) {
   const navigation: MenuItem[] = [
     { name: "Главная", href: "/" },
     {
@@ -114,6 +115,16 @@ export function Header({ programs, events }: HeaderProps) {
                 )}
               </div>
             ))}
+            {isAdmin && (
+              <div className="group h-full relative flex items-center">
+                <Link
+                  href={"/admin"}
+                  className="text-base font-medium text-white hover:text-[#D4B996]"
+                >
+                  Админка
+                </Link>
+              </div>
+            )}
           </div>
           <div className="ml-10 space-x-4 text-white flex items-center gap-2">
             <SignedIn>
