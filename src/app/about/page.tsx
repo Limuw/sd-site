@@ -5,6 +5,11 @@ interface Value {
   description: string;
 }
 
+interface Section {
+  title: string;
+  description: string;
+}
+
 export const metadata: Metadata = {
   title: "О нас | Клуб Ролевого Фехтования",
   description: "Узнайте о истории нашего клуба, миссии и инструкторах",
@@ -38,27 +43,19 @@ export default async function AboutPage() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3 text-[#D4B996]">
-          {/* История клуба */}
-          <div className="p-6 rounded-lg shadow-lg bg-[#D4B996]/20">
-            <h2 className="text-2xl font-bold text-white mb-4">
-              История клуба
-            </h2>
-            <p>{aboutData?.about?.history}</p>
-          </div>
-
-          {/* Наша миссия */}
-          <div className="p-6 rounded-lg shadow-lg bg-[#D4B996]/20">
-            <h2 className="text-2xl font-bold text-white mb-4">Наша миссия</h2>
-            <p>{aboutData?.about?.mission}</p>
-          </div>
-
-          {/* Инструкторы */}
-          <div className="p-6 rounded-lg shadow-lg bg-[#D4B996]/20">
-            <h2 className="text-2xl font-bold text-white mb-4">
-              Наши инструкторы
-            </h2>
-            <p>{aboutData?.about?.instructors}</p>
-          </div>
+          {aboutData?.about?.sections?.map(
+            (section: Section, index: number) => (
+              <div
+                key={index}
+                className="p-6 rounded-lg shadow-lg bg-[#D4B996]/20"
+              >
+                <h2 className="text-2xl font-bold text-white mb-4">
+                  {section.title}
+                </h2>
+                <p>{section.description}</p>
+              </div>
+            )
+          )}
         </div>
 
         {/* Ценности */}

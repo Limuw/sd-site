@@ -5,9 +5,10 @@ export interface Value {
 
 export interface AboutContent {
   description: string;
-  history: string;
-  mission: string;
-  instructors: string;
+  sections: {
+    title: string;
+    description: string;
+  }[];
   values: Value[];
 }
 
@@ -152,9 +153,7 @@ export async function getContent(): Promise<Content | null> {
     return {
       about: {
         description: data.about?.description || "",
-        history: data.about?.history || "",
-        mission: data.about?.mission || "",
-        instructors: data.about?.instructors || "",
+        sections: data.about?.sections || [],
         values: data.about?.values || [],
       },
       home: {
@@ -215,9 +214,7 @@ export function getDefaultContent(): Content {
   return {
     about: {
       description: "",
-      history: "",
-      mission: "",
-      instructors: "",
+      sections: [],
       values: [],
     },
     home: {

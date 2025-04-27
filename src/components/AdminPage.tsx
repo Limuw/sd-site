@@ -23,9 +23,7 @@ export const AdminPageContent = () => {
   const [content, setContent] = useState<Content>({
     about: {
       description: "",
-      history: "",
-      mission: "",
-      instructors: "",
+      sections: [],
       values: [],
     },
     home: {
@@ -95,9 +93,7 @@ export const AdminPageContent = () => {
             ...content,
             about: {
               description: data.about?.description || "",
-              history: data.about?.history || "",
-              mission: data.about?.mission || "",
-              instructors: data.about?.instructors || "",
+              sections: data.about?.sections || [],
               values: data.about?.values || [],
             },
             home: {
@@ -246,58 +242,70 @@ export const AdminPageContent = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>История</CardTitle>
+              <CardTitle>Разделы</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Textarea
-                value={content.about.history}
-                onChange={(e) =>
+            <CardContent className="space-y-4">
+              {content.about.sections.map((section, index) => (
+                <div key={index} className="flex gap-4 items-start">
+                  <div className="flex-1 space-y-2">
+                    <Input
+                      value={section.title}
+                      onChange={(e) => {
+                        const newSections = [...content.about.sections];
+                        newSections[index].title = e.target.value;
+                        setContent({
+                          ...content,
+                          about: { ...content.about, sections: newSections },
+                        });
+                      }}
+                      placeholder="Введите заголовок"
+                    />
+                    <Textarea
+                      value={section.description}
+                      onChange={(e) => {
+                        const newSections = [...content.about.sections];
+                        newSections[index].description = e.target.value;
+                        setContent({
+                          ...content,
+                          about: { ...content.about, sections: newSections },
+                        });
+                      }}
+                      placeholder="Введите описание"
+                      className="min-h-[100px]"
+                    />
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => {
+                      const newSections = [...content.about.sections];
+                      newSections.splice(index, 1);
+                      setContent({
+                        ...content,
+                        about: { ...content.about, sections: newSections },
+                      });
+                    }}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button
+                onClick={() => {
                   setContent({
                     ...content,
-                    about: { ...content.about, history: e.target.value },
-                  })
-                }
-                placeholder="Введите историю"
-                className="min-h-[100px]"
-              />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Миссия</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                value={content.about.mission}
-                onChange={(e) =>
-                  setContent({
-                    ...content,
-                    about: { ...content.about, mission: e.target.value },
-                  })
-                }
-                placeholder="Введите миссию"
-                className="min-h-[100px]"
-              />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Инструкторы</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                value={content.about.instructors}
-                onChange={(e) =>
-                  setContent({
-                    ...content,
-                    about: { ...content.about, instructors: e.target.value },
-                  })
-                }
-                placeholder="Введите информацию об инструкторах"
-                className="min-h-[100px]"
-              />
+                    about: {
+                      ...content.about,
+                      sections: [
+                        ...content.about.sections,
+                        { title: "", description: "" },
+                      ],
+                    },
+                  });
+                }}
+              >
+                Добавить раздел
+              </Button>
             </CardContent>
           </Card>
 
