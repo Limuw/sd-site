@@ -4,11 +4,13 @@ export interface Value {
 }
 
 export interface AboutContent {
+  title: string;
   description: string;
   sections: {
     title: string;
     description: string;
   }[];
+  valuesTitle: string;
   values: Value[];
 }
 
@@ -152,8 +154,10 @@ export async function getContent(): Promise<Content | null> {
 
     return {
       about: {
+        title: data.about?.title || "",
         description: data.about?.description || "",
         sections: data.about?.sections || [],
+        valuesTitle: data.about?.valuesTitle || "",
         values: data.about?.values || [],
       },
       home: {
@@ -213,8 +217,10 @@ export async function getContent(): Promise<Content | null> {
 export function getDefaultContent(): Content {
   return {
     about: {
+      title: "",
       description: "",
       sections: [],
+      valuesTitle: "",
       values: [],
     },
     home: {

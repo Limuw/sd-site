@@ -22,8 +22,10 @@ export const AdminPageContent = () => {
 
   const [content, setContent] = useState<Content>({
     about: {
+      title: "",
       description: "",
       sections: [],
+      valuesTitle: "",
       values: [],
     },
     home: {
@@ -92,8 +94,10 @@ export const AdminPageContent = () => {
           const initializedData = {
             ...content,
             about: {
+              title: data.about?.title || "",
               description: data.about?.description || "",
               sections: data.about?.sections || [],
+              valuesTitle: data.about?.valuesTitle || "",
               values: data.about?.values || [],
             },
             home: {
@@ -223,6 +227,24 @@ export const AdminPageContent = () => {
         <TabsContent value="about" className="space-y-4">
           <Card>
             <CardHeader>
+              <CardTitle>Заголовок страницы</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                value={content.about.title}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    about: { ...content.about, title: e.target.value },
+                  })
+                }
+                placeholder="Введите заголовок страницы"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
               <CardTitle>Описание</CardTitle>
             </CardHeader>
             <CardContent>
@@ -236,6 +258,24 @@ export const AdminPageContent = () => {
                 }
                 placeholder="Введите описание"
                 className="min-h-[100px]"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Заголовок раздела ценностей</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                value={content.about.valuesTitle}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    about: { ...content.about, valuesTitle: e.target.value },
+                  })
+                }
+                placeholder="Введите заголовок раздела ценностей"
               />
             </CardContent>
           </Card>

@@ -35,7 +35,7 @@ export default async function AboutPage() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center text-white">
           <h1 className="text-4xl font-bold mb-8 text-[#BE1E2D]">
-            О нашем клубе
+            {aboutData?.about?.title}
           </h1>
           <p className="text-xl max-w-3xl mx-auto text-[#D4B996]">
             {aboutData?.about?.description}
@@ -61,7 +61,7 @@ export default async function AboutPage() {
         {/* Ценности */}
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-white text-center mb-8">
-            Наши основные ценности
+            {aboutData?.about?.valuesTitle}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-[#D4B996]">
             {aboutData?.about?.values?.map((value: Value, index: number) => (
