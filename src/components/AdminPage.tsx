@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { getContent, updateContent, Content } from "@/lib/content";
+import { getContent, updateContent, Content, User } from "@/lib/content";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -84,6 +84,50 @@ export const AdminPageContent = () => {
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState("");
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+
+  const fetchUsers = async () => {
+    setIsLoadingUsers(true);
+    try {
+      const response = await fetch("/api/users");
+      if (response.ok) {
+        const data = await response.json();
+        // Convert Firebase object to array if needed
+        const usersArray = data ? Object.values(data) : [];
+        setUsers(usersArray as User[]);
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setIsLoadingUsers(false);
+    }
+  };
+
+  const updateUserStatus = async (userId: string, newStatus: number) => {
+    try {
+      const response = await fetch("/api/users", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, status: newStatus }),
+      });
+
+      if (response.ok) {
+        // Update local state
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === userId ? { ...user, status: newStatus } : user
+          )
+        );
+      } else {
+        console.error("Failed to update user status");
+      }
+    } catch (error) {
+      console.error("Error updating user status:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -160,6 +204,7 @@ export const AdminPageContent = () => {
       }
     };
     fetchContent();
+    fetchUsers();
   }, []);
 
   const handleSave = async () => {
@@ -195,33 +240,18 @@ export const AdminPageContent = () => {
       </div>
 
       <Tabs defaultValue="home">
-        <TabsList className="grid w-full grid-cols-10 sticky top-32 z-50">
-          <TabsTrigger value="home" className="cursor-pointer">
-            Главная
-          </TabsTrigger>
-          <TabsTrigger value="about" className="cursor-pointer">
-            О нас
-          </TabsTrigger>
-          <TabsTrigger value="programs" className="cursor-pointer">
-            Программы
-          </TabsTrigger>
-          <TabsTrigger value="events" className="cursor-pointer">
-            Мероприятия
-          </TabsTrigger>
-          <TabsTrigger value="gallery" className="cursor-pointer">
-            Галерея
-          </TabsTrigger>
-          <TabsTrigger value="prices" className="cursor-pointer">
-            Цены
-          </TabsTrigger>
-          <TabsTrigger value="contact" className="cursor-pointer">
-            Контакты
-          </TabsTrigger>
-          <TabsTrigger value="blog" className="cursor-pointer">
-            Блог
-          </TabsTrigger>
+        <TabsList className="max-w-full sticky top-32 z-50 overflow-x-auto">
+          <TabsTrigger value="home">Главная</TabsTrigger>
+          <TabsTrigger value="about">О нас</TabsTrigger>
+          <TabsTrigger value="programs">Программы</TabsTrigger>
+          <TabsTrigger value="events">Мероприятия</TabsTrigger>
+          <TabsTrigger value="gallery">Галерея</TabsTrigger>
+          <TabsTrigger value="prices">Цены</TabsTrigger>
+          <TabsTrigger value="contact">Контакты</TabsTrigger>
+          <TabsTrigger value="blog">Блог</TabsTrigger>
           <TabsTrigger value="reviews">Отзывы</TabsTrigger>
           <TabsTrigger value="faq">FAQ</TabsTrigger>
+          <TabsTrigger value="users">Пользователи</TabsTrigger>
         </TabsList>
 
         <TabsContent value="about" className="space-y-4">
@@ -2025,6 +2055,84 @@ export const AdminPageContent = () => {
                 <div className="text-center py-8 text-muted-foreground">
                   Нет вопросов. Нажмите &quot;Добавить вопрос&quot;, чтобы
                   создать новый.
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="users" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Управление пользователями</CardTitle>
+                <Button onClick={fetchUsers} disabled={isLoadingUsers}>
+                  {isLoadingUsers ? "Обновление..." : "Обновить"}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {isLoadingUsers ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  Загрузка пользователей...
+                </div>
+              ) : users.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  Пользователи не найдены
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex flex-wrap gap-4">
+                    {users.map((user, index) => (
+                      <Card key={index} className="overflow-hidden min-w-fit">
+                        <CardHeader className="pb-3">
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <CardTitle className="text-sm font-medium truncate">
+                                {user.name || "Без имени"}
+                              </CardTitle>
+                              <p className="text-xs text-muted-foreground">
+                                ID: {user.id}
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-1 truncate">
+                                {user.email || "Нет email"}
+                              </p>
+                            </div>
+                            <div className="ml-2">
+                              <span
+                                className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                  user.status === 1
+                                    ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                                    : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                                }`}
+                              >
+                                {user.status === 1 ? "Активен" : "Заблокирован"}
+                              </span>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <Button
+                            variant={
+                              user.status === 1 ? "destructive" : "default"
+                            }
+                            size="sm"
+                            className="w-full"
+                            onClick={() =>
+                              updateUserStatus(
+                                user.id,
+                                user.status === 1 ? 0 : 1
+                              )
+                            }
+                          >
+                            {user.status === 1
+                              ? "Заблокировать"
+                              : "Разблокировать"}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
               )}
             </CardContent>

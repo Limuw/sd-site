@@ -137,6 +137,13 @@ export interface Content {
   faq: FAQ[];
 }
 
+export interface User {
+  id: string;
+  email?: string;
+  name: string | null;
+  status: number;
+}
+
 export async function getContent(): Promise<Content | null> {
   try {
     const response = await fetch(
