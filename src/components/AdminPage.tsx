@@ -2117,7 +2117,7 @@ export const AdminPageContent = () => {
                               user.status === 1 ? "destructive" : "default"
                             }
                             size="sm"
-                            className="w-full"
+                            className="w-full cursor-pointer"
                             onClick={() =>
                               updateUserStatus(
                                 user.id,

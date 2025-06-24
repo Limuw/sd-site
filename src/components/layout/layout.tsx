@@ -10,13 +10,19 @@ const events = await getEvents();
 export async function Layout({ children }: { children: React.ReactNode }) {
   const user = await currentUser();
 
+  let shouldRedirect = false;
+
   if (user) {
-    await createUser({
+    const isAllowed = await createUser({
       id: user.id,
       email: user.emailAddresses[0].emailAddress,
       name: user.fullName,
       status: 1,
     });
+
+    if (!isAllowed) {
+      shouldRedirect = true;
+    }
   }
 
   return (
@@ -25,6 +31,7 @@ export async function Layout({ children }: { children: React.ReactNode }) {
         programs={programs}
         events={events}
         isAdmin={user?.id === process.env.ADMIN_ID}
+        shouldRedirect={shouldRedirect}
       />
       <main>{children}</main>
       <ChatWidget />

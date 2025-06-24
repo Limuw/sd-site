@@ -38,12 +38,21 @@ export const getUsers = async () => {
   return data;
 };
 
-export const createUser = async (user: User) => {
+export const createUser = async (user: User): Promise<boolean> => {
   const users = await getUsers();
 
-  if (users && Object.values(users).find((el) => el.id === user.id)) {
-    return;
+  if (users) {
+    const foundUser = Object.values(users).find((el) => el.id === user.id);
+    
+    if (foundUser) {
+      if (foundUser.status === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
+
 
   try {
     const response = await fetch(
@@ -60,7 +69,9 @@ export const createUser = async (user: User) => {
     if (!response.ok) {
       throw new Error("Failed to create user");
     }
+    return true;
   } catch (error) {
     console.error("Error creating user:", error);
+    return false;
   }
 };

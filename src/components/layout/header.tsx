@@ -8,6 +8,8 @@ import clsx from "clsx";
 import { SignInButton } from "@clerk/nextjs";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Button } from "../ui/button";
+import { redirect } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface SubMenuItem {
   name: string;
@@ -24,9 +26,10 @@ interface HeaderProps {
   programs: string[];
   events: string[];
   isAdmin: boolean;
+  shouldRedirect: boolean;
 }
 
-export function Header({ programs, events, isAdmin }: HeaderProps) {
+export function Header({ programs, events, isAdmin, shouldRedirect }: HeaderProps) {
   const navigation: MenuItem[] = [
     { name: "Главная", href: "/" },
     {
@@ -64,6 +67,12 @@ export function Header({ programs, events, isAdmin }: HeaderProps) {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+
+  const pathname = usePathname();
+
+  if (shouldRedirect && pathname !== "/blocked") {
+    redirect("/blocked");
+  }
 
   return (
     <header
