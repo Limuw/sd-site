@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { getContent, updateContent, Content, User } from "@/lib/content";
+import {
+  getContent,
+  updateContent,
+  Content,
+  User,
+  EventRegistration,
+} from "@/lib/content";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -86,6 +92,10 @@ export const AdminPageContent = () => {
   const [saveStatus, setSaveStatus] = useState("");
   const [users, setUsers] = useState<User[]>([]);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [eventRegistrations, setEventRegistrations] = useState<
+    Record<string, EventRegistration>
+  >({});
+  const [isLoadingRegistrations, setIsLoadingRegistrations] = useState(false);
 
   const fetchUsers = async () => {
     setIsLoadingUsers(true);
@@ -101,6 +111,70 @@ export const AdminPageContent = () => {
       console.error("Error fetching users:", error);
     } finally {
       setIsLoadingUsers(false);
+    }
+  };
+
+  const fetchEventRegistrations = async () => {
+    setIsLoadingRegistrations(true);
+    try {
+      const response = await fetch("/api/events/registrations");
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setEventRegistrations(data as Record<string, EventRegistration>);
+      }
+    } catch (error) {
+      console.error("Error fetching event registrations:", error);
+    } finally {
+      setIsLoadingRegistrations(false);
+    }
+  };
+
+  const approveRegistration = async (registrationKey: string) => {
+    try {
+      const response = await fetch("/api/events/registrations", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ registrationKey, status: 1 }),
+      });
+
+      if (response.ok) {
+        setEventRegistrations((prevRegistrations) => {
+          const newRegistrations = { ...prevRegistrations };
+          newRegistrations[registrationKey].status = 1;
+          return newRegistrations;
+        });
+      } else {
+        console.error("Failed to approve registration");
+      }
+    } catch (error) {
+      console.error("Error approving registration:", error);
+    }
+  };
+
+  const deleteRegistration = async (registrationKey: string) => {
+    try {
+      const response = await fetch("/api/events/registrations", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ registrationKey }),
+      });
+
+      if (response.ok) {
+        setEventRegistrations((prevRegistrations) => {
+          const newRegistrations = { ...prevRegistrations };
+          delete newRegistrations[registrationKey];
+          return newRegistrations;
+        });
+      } else {
+        console.error("Failed to delete registration");
+      }
+    } catch (error) {
+      console.error("Error deleting registration:", error);
     }
   };
 
@@ -205,6 +279,7 @@ export const AdminPageContent = () => {
     };
     fetchContent();
     fetchUsers();
+    fetchEventRegistrations();
   }, []);
 
   const handleSave = async () => {
@@ -240,11 +315,11 @@ export const AdminPageContent = () => {
       </div>
 
       <Tabs defaultValue="home">
-        <TabsList className="max-w-full sticky top-32 z-50 overflow-x-auto">
+        <TabsList className="grid w-full grid-cols-12 sticky top-32 z-50">
           <TabsTrigger value="home">Главная</TabsTrigger>
           <TabsTrigger value="about">О нас</TabsTrigger>
           <TabsTrigger value="programs">Программы</TabsTrigger>
-          <TabsTrigger value="events">Мероприятия</TabsTrigger>
+          <TabsTrigger value="events">Запись</TabsTrigger>
           <TabsTrigger value="gallery">Галерея</TabsTrigger>
           <TabsTrigger value="prices">Цены</TabsTrigger>
           <TabsTrigger value="contact">Контакты</TabsTrigger>
@@ -252,6 +327,7 @@ export const AdminPageContent = () => {
           <TabsTrigger value="reviews">Отзывы</TabsTrigger>
           <TabsTrigger value="faq">FAQ</TabsTrigger>
           <TabsTrigger value="users">Пользователи</TabsTrigger>
+          <TabsTrigger value="registrations">Регистрации</TabsTrigger>
         </TabsList>
 
         <TabsContent value="about" className="space-y-4">
@@ -2132,6 +2208,84 @@ export const AdminPageContent = () => {
                         </CardContent>
                       </Card>
                     ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="registrations" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Регистрации на мероприятия</CardTitle>
+                <Button
+                  onClick={fetchEventRegistrations}
+                  disabled={isLoadingRegistrations}
+                >
+                  {isLoadingRegistrations ? "Обновление..." : "Обновить"}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {isLoadingRegistrations ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  Загрузка регистраций...
+                </div>
+              ) : Object.keys(eventRegistrations).length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  Регистрации не найдены
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {Object.entries(eventRegistrations).map((el) => {
+                      const [index, registration] = el;
+                      return (
+                        <Card key={index} className="overflow-hidden">
+                          <CardHeader className="pb-3">
+                            <div className="flex justify-between items-start">
+                              <div className="flex-1">
+                                <CardTitle className="text-sm font-medium truncate">
+                                  {registration.eventName}
+                                </CardTitle>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                  Имя пользователя: {registration.userName}
+                                </p>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                  Email пользователя: {registration.userEmail}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  Дата:{" "}
+                                  {new Date(
+                                    registration.registrationDate
+                                  ).toLocaleDateString("ru-RU")}
+                                </p>
+                              </div>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="pt-0 flex flex-col gap-2">
+                            <Button
+                              size="sm"
+                              className="w-full cursor-pointer"
+                              onClick={() => approveRegistration(index)}
+                              disabled={registration.status === 1}
+                            >
+                              {registration.status === 0 ? "Одобрить" : "Одобрено"}
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              className="w-full cursor-pointer"
+                              onClick={() => deleteRegistration(index)}
+                            >
+                              Удалить
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                   </div>
                 </div>
               )}

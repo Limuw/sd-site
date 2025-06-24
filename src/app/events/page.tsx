@@ -1,15 +1,30 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getContent, Content, Event } from "@/lib/content";
+import { getContent, Content, Event, EventRegistration } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 import { Markdown } from "@/components/markdown";
 import { CalendarDays, MapPin } from "lucide-react";
+import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 
 export default function EventsPage() {
   const [content, setContent] = useState<Content | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [userRegistrations, setUserRegistrations] = useState<
+    Record<string, EventRegistration>
+  >({});
+  const [registrationStatus, setRegistrationStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
+
+  const { isLoaded, isSignedIn } = useAuth();
+  const { user } = useUser();
+
+  const userEmail = user?.emailAddresses[0].emailAddress;
+  const userName = user?.fullName;
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -39,8 +54,8 @@ export default function EventsPage() {
           setContent(data);
           setSelectedEvent(data.events.events[0]);
         }
-      } catch (error) {
-        console.error("Error fetching content:", error);
+      } catch {
+        console.error("Error fetching content");
       } finally {
         setIsLoading(false);
       }
@@ -48,7 +63,76 @@ export default function EventsPage() {
     fetchContent();
   }, []);
 
-  if (isLoading) {
+  useEffect(() => {
+    const fetchUserRegistrations = async () => {
+      if (isSignedIn) {
+        try {
+          const response = await fetch("/api/events/registrations");
+          if (response.ok) {
+            const registrations = await response.json();
+            setUserRegistrations(registrations);
+          }
+        } catch {
+          console.error("Error fetching user registrations");
+        }
+      }
+    };
+
+    fetchUserRegistrations();
+  }, [isSignedIn]);
+
+  const isRegisteredForEvent = (eventName: string) => {
+    return Object.values(userRegistrations).some(
+      (registration) => registration.eventName === eventName
+    );
+  };
+
+  const handleRegister = async (eventName: string) => {
+    setIsRegistering(true);
+    setRegistrationStatus({ type: null, message: "" });
+
+    try {
+      const response = await fetch("/api/events/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ eventName, userEmail, userName }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setRegistrationStatus({
+          type: "success",
+          message: "Заявка на запись отправлена!",
+        });
+        // Refresh user registrations
+        const registrationsResponse = await fetch("/api/events/registrations");
+        if (registrationsResponse.ok) {
+          const registrations = await registrationsResponse.json();
+          setUserRegistrations(registrations);
+        }
+      } else {
+        setRegistrationStatus({
+          type: "error",
+          message:
+            data.error === "Already registered for this event"
+              ? "Вы уже записаны"
+              : "Ошибка при записи. Попробуйте еще раз.",
+        });
+      }
+    } catch {
+      setRegistrationStatus({
+        type: "error",
+        message: "Ошибка при регистрации. Попробуйте еще раз.",
+      });
+    } finally {
+      setIsRegistering(false);
+    }
+  };
+
+  if (isLoading || !isLoaded) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center">
         Loading...
@@ -150,10 +234,46 @@ export default function EventsPage() {
                 <Markdown className="text-[#D4B996]">
                   {selectedEvent.details}
                 </Markdown>
-                <div className="mt-8">
-                  <Button className="bg-[#BE1E2D] text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-[#BE1E2D]/90 transition-colors">
-                    Зарегистрироваться
-                  </Button>
+                <div className="mt-8 space-y-4">
+                  {registrationStatus.type && (
+                    <div
+                      className={`p-3 rounded-lg text-sm ${
+                        registrationStatus.type === "success"
+                          ? "bg-green-900/50 text-green-200 border border-green-700"
+                          : "bg-red-900/50 text-red-200 border border-red-700"
+                      }`}
+                    >
+                      {registrationStatus.message}
+                    </div>
+                  )}
+                  {isRegisteredForEvent(selectedEvent.title) ? (
+                    <Button
+                      className="bg-green-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors"
+                      disabled
+                    >
+                      {(() => {
+                        const userRegistration = Object.values(userRegistrations).find((el) => el.eventName === selectedEvent.title);
+                        if (userRegistration) {
+                          return userRegistration.status === 1 ? "Запись одобрена ✓" : "Заявка отправлена";
+                        }
+                        return "Заявка отправлена";
+                      })()}
+                    </Button>
+                  ) : isSignedIn ? (
+                    <Button
+                      className="bg-[#BE1E2D] text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-[#BE1E2D]/90 transition-colors disabled:opacity-50"
+                      onClick={() => handleRegister(selectedEvent.title)}
+                      disabled={isRegistering}
+                    >
+                      {isRegistering ? "Регистрация..." : "Зарегистрироваться"}
+                    </Button>
+                  ) : (
+                    <SignInButton>
+                      <Button className="bg-[#BE1E2D] text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-[#BE1E2D]/90 transition-colors disabled:opacity-50">
+                        Зарегистрироваться
+                      </Button>
+                    </SignInButton>
+                  )}
                 </div>
               </div>
             </div>

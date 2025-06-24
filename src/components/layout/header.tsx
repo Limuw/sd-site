@@ -45,7 +45,7 @@ export function Header({ programs, events, isAdmin, shouldRedirect }: HeaderProp
       })),
     },
     {
-      name: "Мероприятия",
+      name: "Запись",
       href: "/events",
       submenu: events.map((el, idx) => ({
         name: el,
@@ -76,7 +76,7 @@ export function Header({ programs, events, isAdmin, shouldRedirect }: HeaderProp
 
   return (
     <header
-      className="bg-[#333333] sticky top-0 z-50"
+      className="bg-[#333333] sticky top-0 z-[1000]"
       onMouseLeave={() => setActiveSubmenu(null)}
     >
       <nav

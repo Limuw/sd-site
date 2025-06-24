@@ -144,6 +144,14 @@ export interface User {
   status: number;
 }
 
+export interface EventRegistration {
+  eventName: string;
+  registrationDate: string;
+  status: number;
+  userEmail: string;
+  userName: string;
+}
+
 export async function getContent(): Promise<Content | null> {
   try {
     const response = await fetch(
